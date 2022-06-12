@@ -5,11 +5,9 @@ using Library.Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-#nullable disable
-
-namespace Library.Infrastructure.Modelsaa
+namespace Library.Infrastructure.Data
 {
-    public partial class DBLibraryContext : DbContext
+    public class DBLibraryContext : DbContext
     {
         public DBLibraryContext()
         {
@@ -42,6 +40,5 @@ namespace Library.Infrastructure.Modelsaa
 
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

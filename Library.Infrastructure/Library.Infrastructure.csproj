@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Folder Include="Modelsaa\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 
