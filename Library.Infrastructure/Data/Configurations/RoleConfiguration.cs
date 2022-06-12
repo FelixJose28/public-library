@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("Role", "user");
 
+            entity.HasKey(e =>e.RoleId);
+
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");
 
             entity.Property(e => e.ModifiedBy)

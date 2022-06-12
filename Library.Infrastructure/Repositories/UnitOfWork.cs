@@ -11,9 +11,14 @@ namespace Library.Infrastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DBLibraryContext _context;
-        public UnitOfWork(DBLibraryContext context)
+        public IBookRepository _bookRepository { get; }
+        
+        public UnitOfWork(
+            DBLibraryContext context,
+            IBookRepository bookRepository)
         {
             _context = context;
+            _bookRepository = bookRepository;
         }
         public void Commit()
         {
@@ -27,7 +32,10 @@ namespace Library.Infrastructure.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            if (_context != null)
+            {
+                _context.Dispose();
+            }
         }
     }
 }

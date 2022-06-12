@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("BookStatus");
 
+            entity.HasKey(e=>e.BookStatusId);
+
             entity.Property(e => e.Info).HasMaxLength(400);
 
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");

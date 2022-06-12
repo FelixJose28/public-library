@@ -31,6 +31,7 @@ namespace Library.Core.Interfaces
         public async Task<T> GetByIdAsync(int id)
         {
             var entity = await _dbSetEntities.FindAsync(id);
+            _context.Entry(entity).State = EntityState.Detached;
             return entity;
         }
 

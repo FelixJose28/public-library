@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("Book");
 
+            entity.HasKey(e => e.BookId);
+
             entity.Property(e => e.Edition).HasMaxLength(75);
 
             entity.Property(e => e.ImgUrl).HasMaxLength(1000);

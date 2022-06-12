@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("User", "user");
 
+            entity.HasKey(e =>e.UserId);
+
             entity.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(100);

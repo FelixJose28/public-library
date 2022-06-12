@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("RegisterBook");
 
+            entity.HasKey(e =>e.RegisterBookId);
+
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");
 
             entity.Property(e => e.ModifiedBy)

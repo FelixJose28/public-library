@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("Request");
 
+            entity.HasKey(e =>e.RequestId);
+
             entity.Property(e => e.DeliverDate).HasColumnType("datetime");
 
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");

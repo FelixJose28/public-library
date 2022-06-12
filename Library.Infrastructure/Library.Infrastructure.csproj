@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modelsaa\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 

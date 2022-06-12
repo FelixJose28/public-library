@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
         {
                 entity.ToTable("Alert", "user");
 
+            entity.HasKey(e => e.AlertId);
+
                 entity.Property(e => e.Info).HasMaxLength(400);
 
                 entity.Property(e => e.ModificationDate).HasColumnType("datetime");

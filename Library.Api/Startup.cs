@@ -1,4 +1,8 @@
+using Library.Core.Interfaces;
+using Library.Core.Interfaces.Services;
+using Library.Core.Services;
 using Library.Infrastructure.Data;
+using Library.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +38,14 @@ namespace Library.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<DBLibraryContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IBookService, BookService>();
+
 
             services.AddSwaggerGen(c =>
             {
