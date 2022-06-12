@@ -31,7 +31,7 @@ namespace Library.Api
 
             services.AddControllers();
 
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<DBLibraryContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 

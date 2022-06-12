@@ -21,10 +21,10 @@ namespace Library.Infrastructure.Modelsaa
         }
 
         public virtual DbSet<Alert> Alerts { get; set; }
-        public virtual DbSet<Author> Authors { get; set; }
-        public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<BookStatus> BookStatuses { get; set; }
-        public virtual DbSet<LiteraryGender> LiteraryGenders { get; set; }
+        public virtual DbSet<AuthorDto> Authors { get; set; }
+        public virtual DbSet<BookDto> Books { get; set; }
+        public virtual DbSet<BookStatusDto> BookStatuses { get; set; }
+        public virtual DbSet<LiteraryGenderDto> LiteraryGenders { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<RegisterBook> RegisterBooks { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
