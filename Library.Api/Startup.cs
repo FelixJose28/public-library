@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Library.Core.Interfaces;
 using Library.Core.Interfaces.Services;
 using Library.Core.Services;
@@ -33,7 +34,10 @@ namespace Library.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation((options =>
+            {
+                options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            }));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<DBLibraryContext>(options =>
