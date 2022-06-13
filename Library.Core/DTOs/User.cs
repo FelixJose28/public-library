@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Library.Core.Entities
+namespace Library.Core.DTOs
 {
-    public class UserDto
+    public class UserDto : BaseEntityDto
     {
         public int UserId { get; set; }
         public string UserCode { get; set; }
@@ -18,11 +18,6 @@ namespace Library.Core.Entities
         public string Municipality { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public string RegisteredBy { get; set; }
-        public DateTime? ModificationDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public bool? RegistrationStatus { get; set; }
         public int RoleId { get; set; }
     }
 }

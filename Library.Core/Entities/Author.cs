@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Library.Core.Entities
 {
-    public class Author
+    public class Author : BaseEntity
     {
         public Author()
         {

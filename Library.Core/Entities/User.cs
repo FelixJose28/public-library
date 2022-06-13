@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Library.Core.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
         public User()
         {
@@ -25,11 +25,6 @@ namespace Library.Core.Entities
         public string Municipality { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public string RegisteredBy { get; set; }
-        public DateTime? ModificationDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public bool? RegistrationStatus { get; set; }
         public int RoleId { get; set; }
 
         public virtual Role Role { get; set; }

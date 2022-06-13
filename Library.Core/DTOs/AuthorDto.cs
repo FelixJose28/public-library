@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Library.Core.Entities
+namespace Library.Core.DTOs
 {
-    public class AuthorDto
+    public class AuthorDto: BaseEntityDto
     {
         public int AuthorId { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string FirstSurname { get; set; }
         public string SecondSurname { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public string RegisteredBy { get; set; }
-        public DateTime? ModificationDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public bool? RegistrationStatus { get; set; }
     }
 }
