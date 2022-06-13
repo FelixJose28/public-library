@@ -12,8 +12,7 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("Author");
 
-            entity.HasKey(e => e.AuthorId)
-                .HasName("");
+            entity.HasKey(e => e.AuthorId);
 
             entity.Property(e => e.FirstName)
                 .IsRequired()
