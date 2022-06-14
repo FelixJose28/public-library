@@ -18,6 +18,10 @@ namespace Library.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
+            entity.HasIndex(e => e.Email, "UQ__User__A9D105345FB9982E")
+                .IsUnique();
+
+
             entity.Property(e => e.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -64,11 +68,6 @@ namespace Library.Infrastructure.Data.Configurations
             entity.Property(e => e.SecondSurname).HasMaxLength(50);
 
             entity.Property(e => e.Street).HasMaxLength(100);
-
-            entity.Property(e => e.UserCode)
-                .IsRequired()
-                .HasMaxLength(45)
-                .IsUnicode(false);
 
             entity.HasOne(d => d.Role)
                 .WithMany(p => p.Users)

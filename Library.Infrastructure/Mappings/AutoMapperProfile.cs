@@ -24,6 +24,7 @@ namespace Library.Infrastructure.Mappings
             CreateMap<Role, RoleDto>().ReverseMap();
             CreateMap<Telephone, TelephoneDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<Login, LoginDto>().ReverseMap();
         }
     }
 }
