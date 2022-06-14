@@ -11,7 +11,6 @@ namespace Library.Infrastructure.Repositories
 {
     public class BookRepository: GenericRepository<Book>,IBookRepository
     {
-        private readonly DBLibraryContext _context;
         public BookRepository(DBLibraryContext context) : base(context)
         {
             _context = context;
