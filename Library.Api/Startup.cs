@@ -51,6 +51,8 @@ namespace Library.Api
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<IAuthorReporitory, AuthorReporitory>();
 
+            services.AddTransient<IUserRepository, UserRepository>();
+
 
             services.AddSwaggerGen(c =>
             {
