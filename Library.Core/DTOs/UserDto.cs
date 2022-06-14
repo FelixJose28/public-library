@@ -8,6 +8,7 @@ namespace Library.Core.DTOs
         public int UserId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string FirstSurname { get; set; }
