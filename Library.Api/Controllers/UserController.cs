@@ -32,7 +32,7 @@ namespace Library.Api.Controllers
             return Ok(_userRepository.GetAll());
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);

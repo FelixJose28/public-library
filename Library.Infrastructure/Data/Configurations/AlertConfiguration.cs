@@ -14,7 +14,9 @@ namespace Library.Infrastructure.Data.Configurations
 
             entity.HasKey(e => e.AlertId);
 
-                entity.Property(e => e.Info).HasMaxLength(400);
+                entity.Property(e => e.Info)
+                    .IsRequired()
+                    .HasMaxLength(400);
 
                 entity.Property(e => e.ModificationDate).HasColumnType("datetime");
 
@@ -33,7 +35,9 @@ namespace Library.Infrastructure.Data.Configurations
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Title).HasMaxLength(50);
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Alerts)
