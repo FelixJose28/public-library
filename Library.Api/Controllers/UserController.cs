@@ -52,7 +52,7 @@ namespace Library.Api.Controllers
         {
             var user = _mapper.Map<User>(userDto);
             await _userRepository.UpdateAsync(user);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = user.UserId }, user);
+            return NoContent();
         }
     }
 }
