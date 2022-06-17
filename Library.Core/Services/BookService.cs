@@ -25,5 +25,11 @@ namespace Library.Core.Services
         {
             return _unitOfWork._bookRepository.GetAll();
         }
+
+        public async Task AddBookAsync(Book book)
+        {
+            await _unitOfWork._bookRepository.AddAsync(book);
+            await _unitOfWork.CommitAsync();
+        }
     }
 }

@@ -11,15 +11,26 @@ namespace Library.Infrastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DBLibraryContext _context;
+        public IAlertRepository _alertRepository { get; }
+        public IAuthorReporitory _authorReporitory { get; }
         public IBookRepository _bookRepository { get; }
-        
+        public IUserRepository _userRepository { get; }
+
+
         public UnitOfWork(
             DBLibraryContext context,
-            IBookRepository bookRepository)
+            IAlertRepository alertRepository, 
+            IAuthorReporitory authorReporitory, 
+            IBookRepository bookRepository, 
+            IUserRepository userRepository)
         {
             _context = context;
+            _alertRepository = alertRepository;
+            _authorReporitory = authorReporitory;
             _bookRepository = bookRepository;
+            _userRepository = userRepository;
         }
+
         public void Commit()
         {
             _context.SaveChanges();

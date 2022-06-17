@@ -20,12 +20,12 @@ namespace Library.Api.Controllers
     public class TokenController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TokenController(IConfiguration configuration, IUserRepository userRepository)
+        public TokenController(IConfiguration configuration, IUnitOfWork unitOfWork)
         {
             _configuration = configuration;
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -41,7 +41,7 @@ namespace Library.Api.Controllers
         }
         private (bool,User) ValidateUser(LoginVm login)
         {
-            var user = _userRepository.GetAll().Where(x=>x.Email == login.Email && x.Password == login.Password).FirstOrDefault();
+            var user = _unitOfWork._userRepository.GetAll().Where(x=>x.Email == login.Email && x.Password == login.Password).FirstOrDefault();
             if (user == null) return (false, null);
             return (true,user);
             

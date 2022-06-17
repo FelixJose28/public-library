@@ -12,16 +12,16 @@ namespace Library.Api.Controllers
     [ApiController]
     public class AuthorController : ControllerBase
     {
-        private readonly IAuthorReporitory _authorReporitory;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthorController(IAuthorReporitory authorReporitory)
+        public AuthorController(IUnitOfWork unitOfWork)
         {
-            _authorReporitory = authorReporitory;
+            _unitOfWork = unitOfWork;
         }
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_authorReporitory.GetAll());
+            return Ok(_unitOfWork._authorReporitory.GetAll());
         }
     }
 }

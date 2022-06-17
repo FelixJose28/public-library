@@ -42,10 +42,10 @@ namespace Library.Core.Interfaces
             return entityEntry.Entity;
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public T Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            return Task.FromResult(entity);
+            return entity;
         }
     }
 }

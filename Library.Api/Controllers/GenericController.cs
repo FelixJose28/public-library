@@ -11,17 +11,25 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenericController<TEntity, TEntityDto, TRepository> : ControllerBase
+    public class GenericController<TEntity, TEntityDto, TRepository,TUnitOfWork> : ControllerBase
     where TEntity : class
     where TEntityDto : class
     where TRepository : IGenericRepository<TEntity>
+    where TUnitOfWork : IUnitOfWork
+
     {
         private readonly TRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public GenericController(TRepository repository, IMapper mapper)
+        public GenericController(
+            TRepository repository, 
+            IMapper mapper,
+            IUnitOfWork unitOfWork
+            )
         {
             _repository = repository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -38,6 +46,7 @@ namespace Library.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var entity = await _repository.GetByIdAsync(id);
+            if (entity == null) return NotFound($"{typeof(TEntity).Name} not found");
             return Ok(entity);
         }
 
@@ -46,15 +55,16 @@ namespace Library.Api.Controllers
         {
             var entity = _mapper.Map<TEntity>(entityDto);
             await _repository.AddAsync(entity);
-            return Ok();
-            //return CreatedAtAction(nameof(GetByIdAsync), new { id = entity. }, entity);
+            await _unitOfWork.CommitAsync();
+            return Created(nameof(GetByIdAsync),entity);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(TEntityDto entityDto)
+        public IActionResult UpdateAsync(TEntityDto entityDto)
         {
             var entity = _mapper.Map<TEntity>(entityDto);
-            await _repository.UpdateAsync(entity);
+            _repository.Update(entity);
+            _unitOfWork.Commit();
             return NoContent();
         }
     }

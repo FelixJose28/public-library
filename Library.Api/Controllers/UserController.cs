@@ -15,12 +15,12 @@ namespace Library.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -29,13 +29,13 @@ namespace Library.Api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_userRepository.GetAll());
+            return Ok(_unitOfWork._userRepository.GetAll());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _unitOfWork._userRepository.GetByIdAsync(id);
             return Ok(user);
         }
 
@@ -43,15 +43,17 @@ namespace Library.Api.Controllers
         public async Task<IActionResult> AddAsync(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            await _userRepository.AddAsync(user);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = user.UserId},user);
+            await _unitOfWork._userRepository.AddAsync(user);
+            await _unitOfWork.CommitAsync();
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = user.UserId} ,user);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(UserDto userDto)
+        public IActionResult Update(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            await _userRepository.UpdateAsync(user);
+            _unitOfWork._userRepository.Update(user);
+            _unitOfWork.Commit();
             return NoContent();
         }
     }

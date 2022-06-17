@@ -37,10 +37,13 @@ namespace Library.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddFluentValidation((options =>
+            services.AddControllers(options =>
+            {
+                options.SuppressAsyncSuffixInActionNames = false;
+            }).AddFluentValidation(options =>
             {
                 options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-            }));
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<DBLibraryContext>(options =>
@@ -50,7 +53,8 @@ namespace Library.Api
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options =>
+            {
                 //validacion del jwt
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -70,11 +74,10 @@ namespace Library.Api
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            services.AddTransient<IAlertRepository, AlertRepository>();
+            services.AddTransient<IAuthorReporitory, AuthorReporitory>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IBookService, BookService>();
-            services.AddTransient<IAuthorReporitory, AuthorReporitory>();
-            services.AddTransient<IAlertRepository, AlertRepository>();
-            
 
             services.AddTransient<IUserRepository, UserRepository>();
 

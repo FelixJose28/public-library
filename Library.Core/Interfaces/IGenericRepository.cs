@@ -12,6 +12,6 @@ namespace Library.Core.Interfaces
         Task<T> GetByIdAsync(int i);
         Task<T> RemoveAsync(int i);
         Task<T> AddAsync(T entity);
-        Task<T> UpdateAsync(T entity);
+        T Update(T entity);
     }
 }

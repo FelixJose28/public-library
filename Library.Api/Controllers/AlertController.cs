@@ -14,9 +14,9 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AlertController : GenericController<Alert, AlertDto, IAlertRepository>
+    public class AlertController : GenericController<Alert, AlertDto, IAlertRepository,IUnitOfWork>
     {
-        public AlertController(IAlertRepository repository, IMapper mapper) : base(repository, mapper)
+        public AlertController(IAlertRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
         {
             
         }

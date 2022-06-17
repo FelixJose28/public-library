@@ -8,7 +8,10 @@ namespace Library.Core.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IBookRepository _bookRepository { get; }
+        public IAlertRepository _alertRepository { get; }
+        public IAuthorReporitory _authorReporitory { get; }
+        public IBookRepository _bookRepository { get; }
+        public IUserRepository _userRepository { get; }
         void Commit();
         Task CommitAsync();
     }

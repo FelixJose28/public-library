@@ -11,5 +11,6 @@ namespace Library.Core.Interfaces.Services
     {
         IEnumerable<Book> GetBooks();
         Task<Book> GetBookAsync(int id);
+        Task AddBookAsync(Book book);
     }
 }
