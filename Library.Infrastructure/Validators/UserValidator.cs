@@ -26,7 +26,8 @@ namespace Library.Infrastructure.Validators
 
             RuleFor(x => x.Email)
                 .NotEmpty()
-                .Matches(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
+                .EmailAddress();
+                //.Matches(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
 
             RuleFor(x => x.FirstName)
                 .MaximumLength(50)
