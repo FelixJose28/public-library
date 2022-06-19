@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace Library.Api.Controllers
 {
+    /// <summary>
+    /// A generic implementation of a <a cref="ControllerBase"/> with a mapper, that provides operations for POST, PUT, GET,
+    /// this requires the type of the entity, the entity data transfer object and the repository used for the entity.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the entity to store in the repositoy.</typeparam>
+    /// <typeparam name="TEntityDto">The type of the entity data transfer object.</typeparam>
+    /// <typeparam name="TRepository">The type of the repository.</typeparam>
+    /// <typeparam name="TUnitOfWork">Unit of work for all the repositories</typeparam>
     [Route("api/[controller]")]
     [ApiController]
     public class GenericController<TEntity, TEntityDto, TRepository,TUnitOfWork> : ControllerBase
@@ -33,15 +41,23 @@ namespace Library.Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Get all  
+        /// </summary>
+        /// <returns>List of entity</returns>
         [HttpGet]
         public IActionResult GetAll()
         {
             var entities = _repository.GetAll();
             if (!entities.Any()) return NotFound($"There aren't {typeof(TEntity).Name}");
-            return Ok(_repository.GetAll());
+            return Ok(entities);
         }
 
+        /// <summary>
+        /// Get entity by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An entity</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -50,6 +66,11 @@ namespace Library.Api.Controllers
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Add a entity
+        /// </summary>
+        /// <param name="entityDto">The entity data transfer object</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> AddAsync(TEntityDto entityDto)
         {
@@ -59,6 +80,11 @@ namespace Library.Api.Controllers
             return Created(nameof(GetByIdAsync),entity);
         }
 
+        /// <summary>
+        /// Update a entity
+        /// </summary>
+        /// <param name="entityDto">The entity data transfer object</param>
+        /// <returns></returns>
         [HttpPut]
         public IActionResult UpdateAsync(TEntityDto entityDto)
         {

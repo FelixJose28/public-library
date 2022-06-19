@@ -12,7 +12,7 @@ namespace Library.Infrastructure.Repositories
     {
         private readonly DBLibraryContext _context;
         public IAlertRepository _alertRepository { get; }
-        public IAuthorReporitory _authorReporitory { get; }
+        public IAuthorRepository _authorReporitory { get; }
         public IBookRepository _bookRepository { get; }
         public IUserRepository _userRepository { get; }
 
@@ -20,7 +20,7 @@ namespace Library.Infrastructure.Repositories
         public UnitOfWork(
             DBLibraryContext context,
             IAlertRepository alertRepository, 
-            IAuthorReporitory authorReporitory, 
+            IAuthorRepository authorReporitory, 
             IBookRepository bookRepository, 
             IUserRepository userRepository)
         {

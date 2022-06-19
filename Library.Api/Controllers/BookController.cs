@@ -19,6 +19,10 @@ namespace Library.Api.Controllers
             _bookService = bookService;
         }
 
+        /// <summary>
+        /// Get all
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetAllBook()
         {

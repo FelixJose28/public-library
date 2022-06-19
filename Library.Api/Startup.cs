@@ -18,7 +18,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,7 +77,7 @@ namespace Library.Api
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IAlertRepository, AlertRepository>();
-            services.AddTransient<IAuthorReporitory, AuthorReporitory>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IBookService, BookService>();
 
@@ -85,6 +87,10 @@ namespace Library.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library.Api", Version = "v1" });
+                //set the comments patch for the Swagger JSO and UI
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
