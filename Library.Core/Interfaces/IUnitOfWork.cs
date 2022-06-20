@@ -12,6 +12,7 @@ namespace Library.Core.Interfaces
         public IAuthorRepository _authorReporitory { get; }
         public IBookRepository _bookRepository { get; }
         public IUserRepository _userRepository { get; }
+        public ILoginRepository _loginRepository { get; }
         void Commit();
         Task CommitAsync();
     }

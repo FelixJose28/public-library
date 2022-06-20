@@ -15,6 +15,7 @@ namespace Library.Infrastructure.Repositories
         public IAuthorRepository _authorReporitory { get; }
         public IBookRepository _bookRepository { get; }
         public IUserRepository _userRepository { get; }
+        public ILoginRepository _loginRepository { get; }
 
 
         public UnitOfWork(
@@ -22,13 +23,15 @@ namespace Library.Infrastructure.Repositories
             IAlertRepository alertRepository, 
             IAuthorRepository authorReporitory, 
             IBookRepository bookRepository, 
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            ILoginRepository loginRepository)
         {
             _context = context;
             _alertRepository = alertRepository;
             _authorReporitory = authorReporitory;
             _bookRepository = bookRepository;
             _userRepository = userRepository;
+            _loginRepository = loginRepository;            
         }
 
         public void Commit()
