@@ -23,7 +23,6 @@ namespace Library.Api.Controllers
         /// <param name="unitOfWork"></param>
         public AuthorController(IAuthorRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
         {
-
         }
     }
 }

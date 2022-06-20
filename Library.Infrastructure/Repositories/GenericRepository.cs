@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,9 +24,18 @@ namespace Library.Core.Interfaces
             return entityEntry.Entity;
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = default)
         {
-            return _dbSetEntities.AsEnumerable();
+            IQueryable<T> query = null;
+            if (filter == null)
+            {
+                query = _dbSetEntities.AsNoTracking();
+            }
+            else
+            {
+                query = _dbSetEntities.AsNoTracking().Where(filter);
+            }
+            return await query.ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)

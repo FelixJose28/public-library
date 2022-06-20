@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Library.Api.Controllers
@@ -46,9 +47,9 @@ namespace Library.Api.Controllers
         /// </summary>
         /// <returns>List of entity</returns>
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var entities = _repository.GetAll();
+            var entities = await _repository.GetAllAsync();
             if (!entities.Any()) return NotFound($"There aren't {typeof(TEntity).Name}");
             return Ok(entities);
         }

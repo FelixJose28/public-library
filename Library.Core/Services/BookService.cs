@@ -4,6 +4,7 @@ using Library.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,9 +22,9 @@ namespace Library.Core.Services
             return await _unitOfWork._bookRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Book> GetBooks()
+        public async Task<IEnumerable<Book>> GetBooksAsync()
         {
-            return _unitOfWork._bookRepository.GetAll();
+            return await _unitOfWork._bookRepository.GetAllAsync();
         }
 
         public async Task AddBookAsync(Book book)

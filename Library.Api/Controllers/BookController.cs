@@ -24,9 +24,9 @@ namespace Library.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetAllBook()
+        public async Task<IActionResult> GetAllBook()
         {
-            return Ok(_bookService.GetBooks());
+            return Ok(await _bookService.GetBooksAsync());
         }
     }
 }

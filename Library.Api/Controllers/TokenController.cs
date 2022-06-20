@@ -29,9 +29,9 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginVm login)
+        public async Task<IActionResult> Login(LoginVm login)
         {
-            var user = ValidateUser(login);
+            var user = await ValidateUser(login);
             if (user.Item1)
             {
                 var token = GenerateToken(user.Item2);
@@ -39,9 +39,10 @@ namespace Library.Api.Controllers
             }
             return NotFound("User not macth");
         }
-        private (bool,User) ValidateUser(LoginVm login)
+        private async Task<(bool,User)> ValidateUser(LoginVm login)
         {
-            var user = _unitOfWork._userRepository.GetAll().Where(x=>x.Email == login.Email && x.Password == login.Password).FirstOrDefault();
+            var users = await  _unitOfWork._userRepository.GetAllAsync(x => x.Email == login.Email && x.Password == login.Password);
+            var user = users.FirstOrDefault();
             if (user == null) return (false, null);
             return (true,user);
             

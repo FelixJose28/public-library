@@ -27,9 +27,11 @@ namespace Library.Api.Controllers
 
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_unitOfWork._userRepository.GetAll());
+            var users = await _unitOfWork._userRepository.GetAllAsync();
+            if (!users.Any()) return NotFound("There aren't user");
+            return Ok();
         }
 
         [HttpGet("{id}")]
@@ -45,7 +47,7 @@ namespace Library.Api.Controllers
             var user = _mapper.Map<User>(userDto);
             await _unitOfWork._userRepository.AddAsync(user);
             await _unitOfWork.CommitAsync();
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = user.UserId} ,user);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = user.UserId }, user);
         }
 
         [HttpPut]
