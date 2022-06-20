@@ -87,11 +87,11 @@ namespace Library.Api.Controllers
         /// <param name="entityDto">The entity data transfer object</param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult UpdateAsync(TEntityDto entityDto)
+        public async Task<IActionResult> UpdateAsync(TEntityDto entityDto)
         {
             var entity = _mapper.Map<TEntity>(entityDto);
             _repository.Update(entity);
-            _unitOfWork.Commit();
+            await _unitOfWork.CommitAsync();
             return NoContent();
         }
     }

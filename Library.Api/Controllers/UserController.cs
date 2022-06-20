@@ -46,17 +46,38 @@ namespace Library.Api.Controllers
         {
             var user = _mapper.Map<User>(userDto);
             await _unitOfWork._userRepository.AddAsync(user);
+
+            var login = MapUserToLogin(user);
+            await _unitOfWork._loginRepository.AddAsync(login);
             await _unitOfWork.CommitAsync();
             return CreatedAtAction(nameof(GetByIdAsync), new { id = user.UserId }, user);
         }
 
         [HttpPut]
-        public IActionResult Update(UserDto userDto)
+        public async Task<IActionResult> Update(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
             _unitOfWork._userRepository.Update(user);
-            _unitOfWork.Commit();
+
+            var login = MapUserToLogin(user);
+            _unitOfWork._loginRepository.Update(login);
+            await _unitOfWork.CommitAsync();
             return NoContent();
+        }
+        private Login MapUserToLogin(User user)
+        {
+            return new Login
+            {
+                LoginId = 0,
+                Email = user.Email,
+                Password = user.Password,
+                UserId = user.UserId,
+                RegistrationDate = user.RegistrationDate,
+                RegisteredBy = user.RegisteredBy,
+                ModificationDate = user.ModificationDate,
+                ModifiedBy = user.ModifiedBy,
+                RegistrationStatus = user.RegistrationStatus
+            };
         }
     }
 }

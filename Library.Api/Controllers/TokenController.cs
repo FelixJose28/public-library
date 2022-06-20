@@ -1,6 +1,6 @@
 ﻿using Library.Core.Models.Entities;
 using Library.Core.Interfaces;
-using Library.Core.Models.VM;
+using Library.Core.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +39,7 @@ namespace Library.Api.Controllers
             }
             return NotFound("User not macth");
         }
+
         private async Task<(bool,User)> ValidateUser(LoginVm login)
         {
             var users = await  _unitOfWork._userRepository.GetAllAsync(x => x.Email == login.Email && x.Password == login.Password);
