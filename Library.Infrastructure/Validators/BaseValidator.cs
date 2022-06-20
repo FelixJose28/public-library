@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Library.Core.DTOs;
+using Library.Core.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

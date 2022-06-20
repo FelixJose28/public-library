@@ -1,6 +1,6 @@
-﻿using Library.Core.Entities;
+﻿using Library.Core.Models.Entities;
 using Library.Core.Interfaces;
-using Library.Core.VM;
+using Library.Core.Models.VM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

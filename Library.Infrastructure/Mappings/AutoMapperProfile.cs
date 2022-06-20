@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Library.Core.DTOs;
-using Library.Core.Entities;
+using Library.Core.Models.DTO;
+using Library.Core.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
