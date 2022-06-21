@@ -90,6 +90,7 @@ namespace Library.Api
             services.AddTransient<ILoginRepository, LoginRepository>();
             services.AddTransient<IBookStatusRepository, BookStatusRepository>();
             services.AddTransient<ILiteraryGenderRepository, LiteraryGenderRepository>();
+            services.AddTransient<IPublisherRepository, PublisherRepository>();
             
 
             services.AddSwaggerGen(c =>
