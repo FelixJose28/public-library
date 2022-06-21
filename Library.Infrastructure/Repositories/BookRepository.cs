@@ -13,7 +13,6 @@ namespace Library.Infrastructure.Repositories
     {
         public BookRepository(DBLibraryContext context) : base(context)
         {
-            _context = context;
         }
     }
 }
