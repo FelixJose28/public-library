@@ -93,8 +93,8 @@ namespace Library.Api
             services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<IRegisterBookRepository, RegisterBookRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
-
-
+            services.AddTransient<IRoleRepository, RoleRepository>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library.Api", Version = "v1" });
