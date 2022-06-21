@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Core.Models.Constants;
+using Microsoft.AspNetCore.Authorization;
+using System.Transactions;
 
 namespace Library.Api.Controllers
 {
@@ -26,6 +29,7 @@ namespace Library.Api.Controllers
 
 
 
+        [Authorize(Roles = CRole.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -34,6 +38,7 @@ namespace Library.Api.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -44,15 +49,23 @@ namespace Library.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync(UserDto userDto)
         {
-            var user = _mapper.Map<User>(userDto);
-            await _unitOfWork._userRepository.AddAsync(user);
+            using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
 
-            var login = MapUserToLogin(user);
-            await _unitOfWork._loginRepository.AddAsync(login);
-            await _unitOfWork.CommitAsync();
-            return CreatedAtAction(nameof(GetByIdAsync), new { id = user.UserId }, user);
+                var user = _mapper.Map<User>(userDto);
+                await _unitOfWork._userRepository.AddAsync(user);
+
+
+                await _unitOfWork.CommitAsync();
+                var login = MapUserToLogin(user);
+                await _unitOfWork._loginRepository.AddAsync(login);
+                await _unitOfWork.CommitAsync();
+                scope.Complete();
+                return Created(nameof(GetByIdAsync), user);
+            }
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update(UserDto userDto)
         {
@@ -64,6 +77,7 @@ namespace Library.Api.Controllers
             await _unitOfWork.CommitAsync();
             return NoContent();
         }
+
         private Login MapUserToLogin(User user)
         {
             return new Login
