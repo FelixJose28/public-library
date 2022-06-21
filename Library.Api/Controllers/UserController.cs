@@ -69,13 +69,18 @@ namespace Library.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UserDto userDto)
         {
-            var user = _mapper.Map<User>(userDto);
-            _unitOfWork._userRepository.Update(user);
+            using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var user = _mapper.Map<User>(userDto);
+                _unitOfWork._userRepository.Update(user);
 
-            var login = MapUserToLogin(user);
-            _unitOfWork._loginRepository.Update(login);
-            await _unitOfWork.CommitAsync();
-            return NoContent();
+                var login = MapUserToLogin(user);
+                _unitOfWork._loginRepository.Update(login);
+                await _unitOfWork.CommitAsync();
+                scope.Complete();
+                return NoContent();
+
+            }
         }
 
         private Login MapUserToLogin(User user)
