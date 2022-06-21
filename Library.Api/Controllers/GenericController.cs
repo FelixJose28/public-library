@@ -51,7 +51,8 @@ namespace Library.Api.Controllers
         {
             var entities = await _repository.GetAllAsync();
             if (!entities.Any()) return NotFound($"There aren't {typeof(TEntity).Name}");
-            return Ok(entities);
+            var entitiesDto = _mapper.Map<IEnumerable<TEntityDto>>(entities);
+            return Ok(entitiesDto);
         }
 
         /// <summary>
@@ -64,7 +65,8 @@ namespace Library.Api.Controllers
         {
             var entity = await _repository.GetByIdAsync(id);
             if (entity == null) return NotFound($"{typeof(TEntity).Name} not found");
-            return Ok(entity);
+            var entityDto = _mapper.Map<TEntityDto>(entity);
+            return Ok(entityDto);
         }
 
         /// <summary>
