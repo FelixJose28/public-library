@@ -14,7 +14,9 @@ namespace Library.Infrastructure.Data.Configurations
 
             entity.HasKey(e=>e.BookStatusId);
 
-            entity.Property(e => e.Info).HasMaxLength(400);
+            entity.Property(e => e.Info)
+                .IsRequired()
+                .HasMaxLength(400);
 
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");
 
@@ -22,7 +24,9 @@ namespace Library.Infrastructure.Data.Configurations
                 .HasMaxLength(45)
                 .IsUnicode(false);
 
-            entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(50);
 
             entity.Property(e => e.RegisteredBy)
                 .IsRequired()

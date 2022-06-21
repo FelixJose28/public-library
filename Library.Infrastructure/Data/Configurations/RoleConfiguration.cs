@@ -14,6 +14,9 @@ namespace Library.Infrastructure.Data.Configurations
 
             entity.HasKey(e =>e.RoleId);
 
+            entity.HasIndex(e => e.RoleName)
+                .IsUnique();
+
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");
 
             entity.Property(e => e.ModifiedBy)

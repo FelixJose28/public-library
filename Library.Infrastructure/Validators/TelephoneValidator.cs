@@ -16,7 +16,8 @@ namespace Library.Infrastructure.Validators
 
             RuleFor(x => x.PhoneNumber)
                     .MaximumLength(25)
-                    .NotEmpty();
+                    .NotEmpty()
+                    .Matches(@"^[0-9]*$");
 
             RuleFor(x => x.UserId)
                 .NotNull();

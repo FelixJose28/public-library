@@ -47,7 +47,7 @@ namespace Library.Api.Controllers
         /// </summary>
         /// <returns>List of entity</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
             var entities = await _repository.GetAllAsync();
             if (!entities.Any()) return NotFound($"There aren't {typeof(TEntity).Name}");

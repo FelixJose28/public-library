@@ -14,6 +14,9 @@ namespace Library.Infrastructure.Data.Configurations
 
             entity.HasKey(e =>e.TelephoneId);
 
+            entity.HasIndex(e => e.PhoneNumber)
+                .IsUnique();
+
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");
 
             entity.Property(e => e.ModifiedBy)
@@ -22,6 +25,7 @@ namespace Library.Infrastructure.Data.Configurations
 
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(25)
+                .IsRequired()
                 .IsUnicode(false);
 
             entity.Property(e => e.RegisteredBy)
