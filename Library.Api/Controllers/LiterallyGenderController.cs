@@ -14,15 +14,15 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookStatusController : GenericController<BookStatus, BookStatusDto, IBookStatusRepository,IUnitOfWork>
+    public class LiteraryGenderController : GenericController<LiteraryGender, LiteraryGenderDto, ILiteraryGenderRepository,IUnitOfWork>
     {
         /// <summary>
-        /// Test BookStatus
+        /// Test LiteraryGender
         /// </summary>
         /// <param name="repository"></param>
         /// <param name="mapper"></param>
         /// <param name="unitOfWork"></param>
-        public BookStatusController(IBookStatusRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public LiteraryGenderController(ILiteraryGenderRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
         {
         }
     }
