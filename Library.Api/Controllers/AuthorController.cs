@@ -13,8 +13,16 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorController : ControllerBase
+    public class AuthorController : GenericController<Author,AuthorDto,IAuthorRepository,IUnitOfWork>
     {
-
+        /// <summary>
+        /// Test authorController
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="mapper"></param>
+        /// <param name="unitOfWork"></param>
+        public AuthorController(IAuthorRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        {
+        }
     }
 }

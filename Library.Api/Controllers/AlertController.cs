@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AlertController : GenericController<Alert, AlertDto, IAlertRepository,IUnitOfWork>

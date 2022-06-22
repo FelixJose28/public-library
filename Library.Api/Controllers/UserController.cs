@@ -29,7 +29,7 @@ namespace Library.Api.Controllers
 
 
 
-        [Authorize(Roles = CRole.Admin)]
+        //[Authorize(Roles = CRole.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -38,7 +38,7 @@ namespace Library.Api.Controllers
             return Ok();
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -65,7 +65,7 @@ namespace Library.Api.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut]
         public async Task<IActionResult> Update(UserDto userDto)
         {
