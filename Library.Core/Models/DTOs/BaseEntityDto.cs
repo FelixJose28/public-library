@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Core.Models.DTO
+namespace Library.Core.Models.Dtos
 {
     public class BaseEntityDto
     {

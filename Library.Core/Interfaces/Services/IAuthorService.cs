@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Library.Core.Interfaces.Services
 {
-    public interface IBookService
+    public interface IAuthorService
     {
-        Task<IEnumerable<Book>> GetBooksAsync();
-        Task<Book> GetBookAsync(int id);
-        Task AddBookAsync(Book book);
+        Task<IEnumerable<Author>> GetAuthorsAsync();
+        Task<Author> GetAuthorAsync(int id);
+        Task AddAuthorAsync(Author author);
     }
 }

@@ -12,14 +12,15 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class BookController : ControllerBase
     {
-        private readonly IBookService _bookService;
-        public BookController(IBookService bookService)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public BookController(IUnitOfWork unitOfWork)
         {
-            _bookService = bookService;
+            _unitOfWork = unitOfWork;
         }
+
 
         /// <summary>
         /// Get all
@@ -28,9 +29,9 @@ namespace Library.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBook()
         {
-            var books = await _bookService.GetBooksAsync();
+            var books = await _unitOfWork._bookRepository.GetAllAsync();
             if (!books.Any()) return NotFound("There aren't books registered");
-            return Ok();
+            return Ok(books);
         }
     }
 }

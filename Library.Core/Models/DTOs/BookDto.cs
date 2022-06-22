@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Library.Core.Models.DTO
+namespace Library.Core.Models.Dtos
 {
     public class BookDto : BaseEntityDto
     {

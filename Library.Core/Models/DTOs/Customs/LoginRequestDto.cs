@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.Core.Models.ViewModels
 {
-    public class LoginVm
+    public class LoginRequestDto
     {
         public string Email { get; set; }
         public string Password { get; set; }

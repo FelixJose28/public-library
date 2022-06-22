@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace Library.Core.Services
 {
-    public class BookService : IBookService
+    public class AuthorService : IAuthorService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public BookService(IUnitOfWork unitOfWork)
+        public AuthorService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<Book> GetBookAsync(int id)
+        public async Task<Author> GetAuthorAsync(int id)
         {
-            return await _unitOfWork._bookRepository.GetByIdAsync(id);
+            return await _unitOfWork._authorReporitory.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Book>> GetBooksAsync()
+        public async Task<IEnumerable<Author>> GetAuthorsAsync()
         {
-            return await _unitOfWork._bookRepository.GetAllAsync();
+            return await _unitOfWork._authorReporitory.GetAllAsync();
         }
 
-        public async Task AddBookAsync(Book book)
+        public async Task AddAuthorAsync(Author author)
         {
-            await _unitOfWork._bookRepository.AddAsync(book);
+            await _unitOfWork._authorReporitory.AddAsync(author);
             await _unitOfWork.CommitAsync();
         }
     }
