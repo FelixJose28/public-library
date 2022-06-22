@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Library.Core.Interfaces;
 using Library.Core.Interfaces.Services;
+using Library.Core.Models.Dtos;
 using Library.Core.Models.DTOs;
 using Library.Core.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +43,8 @@ namespace Library.Api.Controllers
         {
             var books = await _unitOfWork._bookRepository.GetAllAsync();
             if (!books.Any()) return NotFound("There aren't books registered");
-            return Ok(books);
+            var booksDto = _mapper.Map<IEnumerable<BookDto>>(books);
+            return Ok(booksDto);
         }
 
         [HttpGet("{id}")]
@@ -50,20 +52,28 @@ namespace Library.Api.Controllers
         {
             var book = await _bookRepository.GetByIdAsync(id);
             if (book == null) return NotFound($"Boo not found");
-            var bookDto = _mapper.Map<BookDocumentPostDto>(book);
+            var bookDto = _mapper.Map<BookDto>(book);
             return Ok(bookDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync([FromForm]BookDocumentPostDto bookDocumentPostDto)
+        public async Task<IActionResult> AddAsync(BookDto bookDto)
         {
-            var book = _mapper.Map<Book>(bookDocumentPostDto);
+            var book = _mapper.Map<Book>(bookDto);
             await _bookRepository.AddAsync(book);
             await _unitOfWork.CommitAsync();
             return Created(nameof(GetByIdAsync), book);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(BookDto bookDto)
+        {
+            var book = _mapper.Map<Book>(bookDto);
+            _bookRepository.Update(book);
+            await _unitOfWork.CommitAsync();
+            return NoContent();
+        }
 
-       
+
     }
 }

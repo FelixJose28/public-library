@@ -12,5 +12,6 @@ namespace Library.Core.Models.Dtos
         public int AuthorId { get; set; }
         public int? PublisherId { get; set; }
         public int? LiteraryGenderId { get; set; }
+        public int? BookImgId { get; set; }
     }
 }

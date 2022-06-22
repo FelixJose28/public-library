@@ -16,6 +16,7 @@ namespace Library.Infrastructure.Mappings
             CreateMap<Alert, AlertDto>().ReverseMap();
             CreateMap<Author, AuthorDto>().ReverseMap();
             CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<BookImg, BookImgDto>().ReverseMap();
             //CreateMap<BookDocumentPostDto, Book>().ReverseMap().ForMember(dest => dest.Documents, act => act.Ignore());
             CreateMap<BookStatus, BookStatusDto>().ReverseMap();
             CreateMap<LiteraryGender, LiteraryGenderDto>().ReverseMap();

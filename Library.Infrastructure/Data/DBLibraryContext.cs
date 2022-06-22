@@ -29,12 +29,11 @@ namespace Library.Infrastructure.Data
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Telephone> Telephones { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<BookImg> BookImgs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-
             //modelBuilder.ApplyConfiguration(new AlertConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 

@@ -55,6 +55,11 @@ namespace Library.Infrastructure.Data.Configurations
                 .WithMany(p => p.Books)
                 .HasForeignKey(d => d.PublisherId)
                 .HasConstraintName("FK_Book_PublisherId_Publisher_PublisherId");
+
+            entity.HasOne(d => d.BookImg)
+                .WithMany(p => p.Books)
+                .HasForeignKey(d => d.BookImgId)
+                .HasConstraintName("FK_Book_BookImgId_BookImg_BookImgId");
         }
     }
 }

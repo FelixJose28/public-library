@@ -35,6 +35,8 @@ namespace Library.Api.Extensions
             services.AddTransient<IRequestRepository, RequestRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<ITelephoneRepository, TelephoneRepository>();
+            services.AddTransient<IBookImgRepository, BookImgRepository>();
+            
         }
 
 
