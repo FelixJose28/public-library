@@ -28,7 +28,9 @@ namespace Library.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBook()
         {
-            return Ok(await _bookService.GetBooksAsync());
+            var books = await _bookService.GetBooksAsync();
+            if (!books.Any()) return NotFound("There aren't books registered");
+            return Ok();
         }
     }
 }

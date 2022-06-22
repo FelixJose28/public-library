@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using Library.Api.Extensions;
 using Library.Core.Interfaces;
 using Library.Core.Interfaces.Services;
 using Library.Core.Services;
@@ -57,83 +58,19 @@ namespace Library.Api
             services.AddDbContext<DBLibraryContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                //validacion del jwt
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration.GetValue<string>("Authentication:Issuer"),
-                    ValidAudience = Configuration.GetValue<string>("Authentication:Audience"),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Authentication:SecretKey")))
-                };
-            });
+            
 
 
 
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-
-            services.AddTransient<IAlertRepository, AlertRepository>();
-            services.AddTransient<IAuthorRepository, AuthorRepository>();
-            services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IBookService, BookService>();
 
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<ILoginRepository, LoginRepository>();
-            services.AddTransient<IBookStatusRepository, BookStatusRepository>();
-            services.AddTransient<ILiteraryGenderRepository, LiteraryGenderRepository>();
-            services.AddTransient<IPublisherRepository, PublisherRepository>();
-            services.AddTransient<IRegisterBookRepository, RegisterBookRepository>();
-            services.AddTransient<IRequestRepository, RequestRepository>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
-            services.AddTransient<ITelephoneRepository, TelephoneRepository>();
+            services.RepositoryServices();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library.Api", Version = "v1" });
-                //set the comments patch for the Swagger JSO and UI
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-
-                c.MapType<TimeSpan>(() => new OpenApiSchema
-                {
-                    Type = "string",
-                    Example = new OpenApiString("00:00:00")
-                });
-
-                //Token ui
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please insert JWT",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-               {
-                 new OpenApiSecurityScheme
-                 {
-                   Reference = new OpenApiReference
-                   {
-                     Type = ReferenceType.SecurityScheme,
-                     Id = "Bearer"
-                   }
-                  },
-                  new string[] { }
-                }
-              });
-            });
+            services.SwaggerConfiguration();
+            services.AuthenticationJwtConfiguration(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
