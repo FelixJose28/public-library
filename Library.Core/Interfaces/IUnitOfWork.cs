@@ -11,6 +11,7 @@ namespace Library.Core.Interfaces
         public IAlertRepository _alertRepository { get; }
         public IAuthorRepository _authorReporitory { get; }
         public IBookRepository _bookRepository { get; }
+        public IBookImgRepository _bookImgRepository { get; }
         public IUserRepository _userRepository { get; }
         public ILoginRepository _loginRepository { get; }
         void Commit();

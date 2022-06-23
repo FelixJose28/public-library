@@ -14,6 +14,7 @@ namespace Library.Infrastructure.Repositories
         public IAlertRepository _alertRepository { get; }
         public IAuthorRepository _authorReporitory { get; }
         public IBookRepository _bookRepository { get; }
+        public IBookImgRepository _bookImgRepository { get; }
         public IUserRepository _userRepository { get; }
         public ILoginRepository _loginRepository { get; }
 
@@ -22,7 +23,8 @@ namespace Library.Infrastructure.Repositories
             DBLibraryContext context,
             IAlertRepository alertRepository, 
             IAuthorRepository authorReporitory, 
-            IBookRepository bookRepository, 
+            IBookRepository bookRepository,
+            IBookImgRepository bookImgRepository,
             IUserRepository userRepository,
             ILoginRepository loginRepository)
         {
@@ -30,6 +32,7 @@ namespace Library.Infrastructure.Repositories
             _alertRepository = alertRepository;
             _authorReporitory = authorReporitory;
             _bookRepository = bookRepository;
+            _bookImgRepository = bookImgRepository;
             _userRepository = userRepository;
             _loginRepository = loginRepository;            
         }
