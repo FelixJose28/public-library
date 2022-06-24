@@ -20,6 +20,9 @@ namespace Library.Api.Controllers
     /// <typeparam name="TUnitOfWork">Unit of work for all the repositories</typeparam>
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public class GenericController<TEntity, TEntityDto, TRepository,TUnitOfWork> : ControllerBase
     where TEntity : class
     where TEntityDto : class
@@ -47,6 +50,8 @@ namespace Library.Api.Controllers
         /// </summary>
         /// <returns>List of entity</returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync()
         {
             var entities = await _repository.GetAllAsync();
@@ -61,6 +66,8 @@ namespace Library.Api.Controllers
         /// <param name="id"></param>
         /// <returns>An entity</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var entity = await _repository.GetByIdAsync(id);
@@ -75,6 +82,8 @@ namespace Library.Api.Controllers
         /// <param name="entityDto">The entity data transfer object</param>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> AddAsync(TEntityDto entityDto)
         {
             var entity = _mapper.Map<TEntity>(entityDto);
@@ -89,6 +98,8 @@ namespace Library.Api.Controllers
         /// <param name="entityDto">The entity data transfer object</param>
         /// <returns></returns>
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateAsync(TEntityDto entityDto)
         {
             var entity = _mapper.Map<TEntity>(entityDto);

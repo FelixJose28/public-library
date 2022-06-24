@@ -38,6 +38,8 @@ namespace Library.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllBook()
         {
             var books = await _unitOfWork._bookRepository.GetAllAsync();
@@ -47,6 +49,8 @@ namespace Library.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var book = await _bookRepository.GetByIdAsync(id);
@@ -56,6 +60,8 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> AddAsync(BookDto bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
@@ -65,6 +71,8 @@ namespace Library.Api.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateAsync(BookDto bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);

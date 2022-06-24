@@ -29,23 +29,31 @@ namespace Library.Api.Controllers
 
 
 
+
         //[Authorize(Roles = CRole.Admin)]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var users = await _unitOfWork._userRepository.GetAllAsync();
             if (!users.Any()) return NotFound("There aren't user");
-            return Ok();
+            return Ok(users);
         }
 
         //[Authorize]
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var user = await _unitOfWork._userRepository.GetByIdAsync(id);
+            if (user == null) return NotFound("User not found");
             return Ok(user);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<IActionResult> AddAsync(UserDto userDto)
         {
@@ -67,6 +75,8 @@ namespace Library.Api.Controllers
 
         //[Authorize]
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Update(UserDto userDto)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))

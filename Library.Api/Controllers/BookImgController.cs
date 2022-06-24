@@ -38,6 +38,8 @@ namespace Library.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllBook()
         {
             var books = await _unitOfWork._bookImgRepository.GetAllAsync();
@@ -46,7 +48,10 @@ namespace Library.Api.Controllers
             return Ok(booksDto);
         }
 
+
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var book = await _unitOfWork._bookImgRepository.GetByIdAsync(id);
@@ -56,12 +61,14 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> AddAsync([FromForm] BookImgFileDto bookImgPostDto)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 string postFix = _configuration.GetValue<string>("ProjectRoot:UploadFile");
-                string filePath = GetFilePath(@$"\{postFix}\", bookImgPostDto.Document);
+                string filePath = GetFilePath(@$"{postFix}", bookImgPostDto.Document);
                 await UploadFile(filePath, bookImgPostDto.Document);
                 BookImg bookImg = BookImgFileDtoToBookImg(bookImgPostDto, filePath, true);
                 await _unitOfWork._bookImgRepository.AddAsync(bookImg);
@@ -73,6 +80,8 @@ namespace Library.Api.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UploadAsync([FromForm] BookImgFileDto bookImgPostDto)
         {
             BookImg bookImgCheck = await _unitOfWork._bookImgRepository.GetByIdAsync(bookImgPostDto.BookImgId);
@@ -80,7 +89,7 @@ namespace Library.Api.Controllers
             using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 string postFix = _configuration.GetValue<string>("ProjectRoot:UploadFile");
-                string filePath = GetFilePath(@$"\{postFix}\", bookImgPostDto.Document);
+                string filePath = GetFilePath(@$"{postFix}", bookImgPostDto.Document);
                 await UploadFile(filePath, bookImgPostDto.Document);
                 DeleteFile(bookImgCheck.Route);
                 BookImg bookImg = BookImgFileDtoToBookImg(bookImgPostDto, filePath,false);
@@ -109,12 +118,12 @@ namespace Library.Api.Controllers
         }
         private string GetFilePath(string rootPostFix, IFormFile file)
         {
-            var root = $@"{System.IO.Directory.GetCurrentDirectory()}{rootPostFix}";
+            var root = $@"{System.IO.Directory.GetCurrentDirectory()}\{rootPostFix}";
             if (!System.IO.Directory.Exists(root))
             {
                 Directory.CreateDirectory(root);
             }
-            var filePath = $"{root}{file.FileName}";
+            var filePath = $@"{root}\{Guid.NewGuid()}_{file.FileName}";
             return filePath;
         }
         private async Task UploadFile(string filePath, IFormFile file)

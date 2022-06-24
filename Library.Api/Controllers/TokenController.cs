@@ -29,6 +29,8 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Login(LoginRequestDto login)
         {
             var user = await ValidateUser(login);
