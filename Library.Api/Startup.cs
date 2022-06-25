@@ -4,7 +4,9 @@ using Library.Core.Interfaces;
 using Library.Core.Interfaces.Services;
 using Library.Core.Services;
 using Library.Infrastructure.Data;
+using Library.Infrastructure.Interfaces;
 using Library.Infrastructure.Repositories;
+using Library.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,6 +70,8 @@ namespace Library.Api
             services.AddTransient<IAuthorService, AuthorService>();
 
             services.RepositoryServices();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.SwaggerConfiguration();
             services.AuthenticationJwtConfiguration(Configuration);
