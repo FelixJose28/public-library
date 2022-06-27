@@ -23,29 +23,65 @@ namespace Library.Infrastructure.Services
 
         public async Task EmailSendAsync(EmailParametersDto emailParameters)
         {
-            //string messageText, string to,string html
-            string host = _configuration.GetValue<string>("EmailConfiguration:Host");
-            int port = _configuration.GetValue<int>("EmailConfiguration:Port");
-            string user = _configuration.GetValue<string>("EmailConfiguration:User");
-            string pass = _configuration.GetValue<string>("EmailConfiguration:Password");
+            var emailConfiguration = GetEmailSendConfiguration();
+            var message = GenerateEmailMessage(emailParameters, emailConfiguration.UserName, emailConfiguration.User);
+            await SendEmail(emailConfiguration,message);
+        }
+
+
+
+        private EmailConfiguration GetEmailSendConfiguration()
+        {
+            var emailConfiguration = new EmailConfiguration
+            {
+                Host = _configuration.GetValue<string>("EmailConfiguration:Host"),
+                Port = _configuration.GetValue<int>("EmailConfiguration:Port"),
+                User = _configuration.GetValue<string>("EmailConfiguration:User"),
+                UserName = _configuration.GetValue<string>("EmailConfiguration:UserName"),
+                Password = _configuration.GetValue<string>("EmailConfiguration:Password")
+            };
+            var emailProp =  emailConfiguration.GetType().GetProperties();
+            foreach (var item in emailProp)
+            {
+                if (item.GetValue(emailConfiguration) == null) throw new ArgumentNullException($"{item.Name} property can't no be null");
+            }
+            return emailConfiguration;
+        }
+
+        private MimeMessage GenerateEmailMessage(EmailParametersDto emailParameters, string userSenderName, string userSender)
+        {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Felix Jose", user));
+            message.From.Add(new MailboxAddress(userSenderName, userSender));
             message.To.Add(new MailboxAddress(emailParameters.ToName, emailParameters.ToEmail));
             message.Subject = emailParameters.Subject;
             message.Body = new TextPart(emailParameters.IsHtml ? TextFormat.Html : TextFormat.Plain)
             {
                 Text = emailParameters.MessageText
             };
+            return message;
+        }
 
-
+        private async Task SendEmail(EmailConfiguration emailConfiguration, MimeMessage message)
+        {
             using (var client = new SmtpClient())
             {
-                // Note: only needed if the SMTP server requires authentication
-                await client.ConnectAsync(host, port, MailKit.Security.SecureSocketOptions.StartTls);
-                await client.AuthenticateAsync(user, pass);
+                await client.ConnectAsync(
+                    emailConfiguration.Host,
+                    emailConfiguration.Port, 
+                    MailKit.Security.SecureSocketOptions.StartTls);
+                await client.AuthenticateAsync(emailConfiguration.User, emailConfiguration.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
             }
+        }
+
+        private class EmailConfiguration
+        {
+            public string Host { get; set; }
+            public int Port { get; set; }
+            public string User { get; set; }
+            public string UserName { get; set; }
+            public string Password { get; set; }
         }
     }
 }
