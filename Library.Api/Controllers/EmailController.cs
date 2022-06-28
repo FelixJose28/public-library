@@ -13,9 +13,9 @@ namespace Library.Api.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailSenderService _emailSender;
 
-        public EmailController(IEmailSender emailSender)
+        public EmailController(IEmailSenderService emailSender)
         {
             _emailSender = emailSender;
         }

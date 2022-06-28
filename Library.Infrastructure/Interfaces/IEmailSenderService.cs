@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Interfaces
 {
-    public interface IEmailSender
+    public interface IEmailSenderService
     {
         Task EmailSendAsync(EmailParametersDto emailParameters);
     }

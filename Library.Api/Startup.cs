@@ -71,7 +71,7 @@ namespace Library.Api
 
             services.RepositoryServices();
 
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
 
             services.SwaggerConfiguration();
             services.AuthenticationJwtConfiguration(Configuration);

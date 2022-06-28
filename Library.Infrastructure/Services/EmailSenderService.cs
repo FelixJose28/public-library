@@ -12,11 +12,11 @@ using Library.Core.Models.Dtos.Customs;
 
 namespace Library.Infrastructure.Services
 {
-    public class EmailSender : IEmailSender
+    public class EmailSenderService : IEmailSenderService
     {
         private readonly IConfiguration _configuration;
 
-        public EmailSender(IConfiguration configuration)
+        public EmailSenderService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -27,7 +27,6 @@ namespace Library.Infrastructure.Services
             var message = GenerateEmailMessage(emailParameters, emailConfiguration.UserName, emailConfiguration.User);
             await SendEmail(emailConfiguration,message);
         }
-
 
 
         private EmailConfiguration GetEmailSendConfiguration()
