@@ -9,16 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Api.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class AlertController : GenericController<Alert, AlertDto, IAlertRepository,IUnitOfWork>
+    public class RequestsController : GenericController<Request, RequestDto, IRequestRepository,IUnitOfWork>
     {
-        public AlertController(IAlertRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public RequestsController(IRequestRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
         {
             
         }

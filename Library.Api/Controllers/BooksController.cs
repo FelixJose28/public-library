@@ -15,13 +15,13 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookController : ControllerBase
+    public class BooksController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
 
-        public BookController(
+        public BooksController(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IBookRepository bookRepository

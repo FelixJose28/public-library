@@ -11,11 +11,11 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmailController : ControllerBase
+    public class EmailsController : ControllerBase
     {
         private readonly IEmailSenderService _emailSender;
 
-        public EmailController(IEmailSenderService emailSender)
+        public EmailsController(IEmailSenderService emailSender)
         {
             _emailSender = emailSender;
         }

@@ -14,7 +14,7 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PublisherController : GenericController<Publisher, PublisherDto, IPublisherRepository,IUnitOfWork>
+    public class PublishersController : GenericController<Publisher, PublisherDto, IPublisherRepository,IUnitOfWork>
     {
         /// <summary>
         /// Test Publisher
@@ -22,7 +22,7 @@ namespace Library.Api.Controllers
         /// <param name="repository"></param>
         /// <param name="mapper"></param>
         /// <param name="unitOfWork"></param>
-        public PublisherController(IPublisherRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public PublishersController(IPublisherRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
         {
         }
     }

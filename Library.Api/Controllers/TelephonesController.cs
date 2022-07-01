@@ -14,9 +14,9 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequestController : GenericController<Request, RequestDto, IRequestRepository,IUnitOfWork>
+    public class TelephonesController : GenericController<Telephone, TelephoneDto, ITelephoneRepository,IUnitOfWork>
     {
-        public RequestController(IRequestRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public TelephonesController(ITelephoneRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
         {
             
         }

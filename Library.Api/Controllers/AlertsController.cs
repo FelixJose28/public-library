@@ -9,14 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Api.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterBookController : GenericController<RegisterBook, RegisterBookDto, IRegisterBookRepository,IUnitOfWork>
+    public class AlertsController : GenericController<Alert, AlertDto, IAlertRepository,IUnitOfWork>
     {
-        public RegisterBookController(IRegisterBookRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public AlertsController(IAlertRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
         {
             
         }

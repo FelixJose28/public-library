@@ -17,12 +17,12 @@ namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TokenController : ControllerBase
+    public class TokensController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TokenController(IConfiguration configuration, IUnitOfWork unitOfWork)
+        public TokensController(IConfiguration configuration, IUnitOfWork unitOfWork)
         {
             _configuration = configuration;
             _unitOfWork = unitOfWork;
