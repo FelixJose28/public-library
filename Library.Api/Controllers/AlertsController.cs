@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Library.Api.Controllers
 {
@@ -18,7 +19,7 @@ namespace Library.Api.Controllers
     [ApiController]
     public class AlertsController : GenericController<Alert, AlertDto, IAlertRepository,IUnitOfWork>
     {
-        public AlertsController(IAlertRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public AlertsController(IAlertRepository repository, IMapper mapper,IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(repository, mapper, unitOfWork,memoryCache,false)
         {
             
         }

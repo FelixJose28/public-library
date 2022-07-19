@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Library.Api.Controllers
 {
@@ -16,7 +17,7 @@ namespace Library.Api.Controllers
     [ApiController]
     public class RequestsController : GenericController<Request, RequestDto, IRequestRepository,IUnitOfWork>
     {
-        public RequestsController(IRequestRepository repository, IMapper mapper,IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public RequestsController(IRequestRepository repository, IMapper mapper,IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(repository, mapper, unitOfWork, memoryCache,false)
         {
             
         }

@@ -2,6 +2,7 @@
 using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Library.Api.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public class GenericController<TEntity, TEntityDto, TRepository,TUnitOfWork> : ControllerBase
+    public abstract class GenericController<TEntity, TEntityDto, TRepository, TUnitOfWork> : ControllerBase
     where TEntity : class
     where TEntityDto : class
     where TRepository : IGenericRepository<TEntity>
@@ -33,15 +34,37 @@ namespace Library.Api.Controllers
         private readonly TRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _memoryCache;
+        private readonly bool _isForCache;
+        private readonly int _cacheLifetimeHours;
+        private readonly MemoryCacheEntryOptions _cacheOptions;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="mapper"></param>
+        /// <param name="unitOfWork"></param>
+        /// <param name="memoryCache"></param>
+        /// <param name="isForCache">You want to implement cache</param>
+        /// <param name="cacheLifetimeHours">Expiration time in hours of cache</param>
         public GenericController(
-            TRepository repository, 
+            TRepository repository,
             IMapper mapper,
-            IUnitOfWork unitOfWork
+            IUnitOfWork unitOfWork,
+            IMemoryCache memoryCache,
+            bool isForCache,
+            int cacheLifetimeHours = 12
             )
         {
             _repository = repository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _memoryCache = memoryCache;
+            _isForCache = isForCache;
+            _cacheLifetimeHours = cacheLifetimeHours;
+            _cacheOptions = new MemoryCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromHours(12));
         }
 
 
@@ -54,8 +77,23 @@ namespace Library.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync()
         {
-            var entities = await _repository.GetAllAsync();
-            if (!entities.Any()) return NotFound($"There aren't {typeof(TEntity).Name}");
+
+            IEnumerable<TEntity> entities;
+            if (_isForCache)
+            {
+                if (!_memoryCache.TryGetValue($"{typeof(TEntity).Name}s", out entities))
+                {
+                    entities = await _repository.GetAllAsync();
+                    if (!entities.Any()) return NotFound($"There aren't {typeof(TEntity).Name}");
+                    _memoryCache.Set($"{typeof(TEntity).Name}s", entities, _cacheOptions);
+                }
+            }
+            else
+            {
+                entities = await _repository.GetAllAsync();
+                if (!entities.Any()) return NotFound($"There aren't {typeof(TEntity).Name}");
+            }
+
             var entitiesDto = _mapper.Map<IEnumerable<TEntityDto>>(entities);
             return Ok(entitiesDto);
         }
@@ -70,8 +108,21 @@ namespace Library.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var entity = await _repository.GetByIdAsync(id);
-            if (entity == null) return NotFound($"{typeof(TEntity).Name} not found");
+            TEntity entity;
+            if (_isForCache)
+            {
+                if (!_memoryCache.TryGetValue($"{typeof(TEntity).Name}", out entity))
+                {
+                    entity = await _repository.GetByIdAsync(id);
+                    if (entity == null) return NotFound($"{typeof(TEntity).Name} not found");
+                    _memoryCache.Set($"{typeof(TEntity).Name}", entity, _cacheOptions);
+                }
+            }
+            else
+            {
+                entity = await _repository.GetByIdAsync(id);
+                if (entity == null) return NotFound($"{typeof(TEntity).Name} not found");
+            }
             var entityDto = _mapper.Map<TEntityDto>(entity);
             return Ok(entityDto);
         }
@@ -89,7 +140,7 @@ namespace Library.Api.Controllers
             var entity = _mapper.Map<TEntity>(entityDto);
             await _repository.AddAsync(entity);
             await _unitOfWork.CommitAsync();
-            return Created(nameof(GetByIdAsync),entity);
+            return Created(nameof(GetByIdAsync), entity);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using Library.Core.Models.Entities;
 using Library.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,7 @@ namespace Library.Api.Controllers
     [ApiController]
     public class LiteraryGenderController : GenericController<LiteraryGender, LiteraryGenderDto, ILiteraryGenderRepository,IUnitOfWork>
     {
-        /// <summary>
-        /// Test LiteraryGender
-        /// </summary>
-        /// <param name="repository"></param>
-        /// <param name="mapper"></param>
-        /// <param name="unitOfWork"></param>
-        public LiteraryGenderController(ILiteraryGenderRepository repository, IMapper mapper, IUnitOfWork unitOfWork) : base(repository, mapper, unitOfWork)
+        public LiteraryGenderController(ILiteraryGenderRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(repository, mapper, unitOfWork,memoryCache,true,24)
         {
         }
     }
