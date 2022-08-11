@@ -35,7 +35,8 @@ namespace Library.Api.Controllers
         {
             var users = await _unitOfWork._userRepository.GetAllAsync();
             if (!users.Any()) return NotFound("There aren't user");
-            return Ok(users);
+            var usersDto = _mapper.Map<IEnumerable<UserDto>>(users);
+            return Ok(usersDto);
         }
 
         //[Authorize]
@@ -46,7 +47,8 @@ namespace Library.Api.Controllers
         {
             var user = await _unitOfWork._userRepository.GetByIdAsync(id);
             if (user == null) return NotFound("User not found");
-            return Ok(user);
+            var userDto = _mapper.Map<UserDto>(user);
+            return Ok(userDto);
         }
 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -16,7 +16,6 @@ namespace Library.Infrastructure.Data.Configurations
 
             entity.Property(e => e.Edition).HasMaxLength(75);
 
-            entity.Property(e => e.ImgUrl).HasMaxLength(1000);
 
             entity.Property(e => e.Isbn)
                 .HasMaxLength(13)

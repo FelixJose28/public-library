@@ -6,7 +6,6 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Library.Api.Controllers
@@ -140,7 +139,7 @@ namespace Library.Api.Controllers
             var entity = _mapper.Map<TEntity>(entityDto);
             await _repository.AddAsync(entity);
             await _unitOfWork.CommitAsync();
-            return Created(nameof(GetByIdAsync), entity);
+            return Created(nameof(GetByIdAsync), entityDto);
         }
 
         /// <summary>

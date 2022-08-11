@@ -20,7 +20,6 @@ namespace Library.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
-
         public BooksController(
             IUnitOfWork unitOfWork,
             IMapper mapper,
@@ -67,7 +66,7 @@ namespace Library.Api.Controllers
             var book = _mapper.Map<Book>(bookDto);
             await _bookRepository.AddAsync(book);
             await _unitOfWork.CommitAsync();
-            return Created(nameof(GetByIdAsync), book);
+            return CreatedAtAction(nameof(GetByIdAsync),new { id = book.AuthorId }, bookDto);
         }
 
         [HttpPut]
