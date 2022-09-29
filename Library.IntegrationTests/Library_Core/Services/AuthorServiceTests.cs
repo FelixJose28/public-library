@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using AutoMapper;
 using Library.Core.Interfaces;
-using Library.Core.Models.Entities;
+using Library.Core.Entities;
 using Library.Core.Services;
 using Library.Infrastructure.Mappings;
 using Moq;

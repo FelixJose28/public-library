@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Library.Core.Interfaces;
-using Library.Core.Models.Dtos;
-using Library.Core.Models.Entities;
+using Library.Core.Dtos;
+using Library.Core.Entities;
 using Library.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

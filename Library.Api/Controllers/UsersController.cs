@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Library.Core.Models.Dtos;
-using Library.Core.Models.Entities;
+using Library.Core.Dtos;
+using Library.Core.Entities;
 using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Library.Core.Models.Constants;
+using Library.Core.CustomEntities.Constants;
 using Microsoft.AspNetCore.Authorization;
 using System.Transactions;
 

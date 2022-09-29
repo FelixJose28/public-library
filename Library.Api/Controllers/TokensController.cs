@@ -1,4 +1,4 @@
-﻿using Library.Core.Models.Entities;
+﻿using Library.Core.Entities;
 using Library.Core.Interfaces;
 using Library.Core.Models.ViewModels;
 using Microsoft.AspNetCore.Http;

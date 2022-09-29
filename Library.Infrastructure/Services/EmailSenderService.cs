@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Library.Infrastructure.Interfaces;
 using MimeKit.Text;
 using Microsoft.Extensions.Configuration;
-using Library.Core.Models.Dtos.Customs;
+using Library.Core.Dtos.Customs;
 
 namespace Library.Infrastructure.Services
 {

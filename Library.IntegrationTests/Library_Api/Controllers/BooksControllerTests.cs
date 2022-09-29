@@ -2,8 +2,8 @@
 using AutoMapper;
 using Library.Api.Controllers;
 using Library.Core.Interfaces;
-using Library.Core.Models.Dtos;
-using Library.Core.Models.Entities;
+using Library.Core.Dtos;
+using Library.Core.Entities;
 using Library.Infrastructure.Mappings;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
