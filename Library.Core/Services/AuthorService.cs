@@ -32,5 +32,10 @@ namespace Library.Core.Services
             await _unitOfWork._authorReporitory.AddAsync(author);
             await _unitOfWork.CommitAsync();
         }
+        public async Task UpdateAuthorAsync(Author author)
+        {
+            _unitOfWork._authorReporitory.Update(author);
+            await _unitOfWork.CommitAsync();
+        }
     }
 }

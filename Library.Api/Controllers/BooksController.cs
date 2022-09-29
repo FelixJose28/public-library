@@ -39,7 +39,7 @@ namespace Library.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllBook()
+        public async Task<IActionResult> GetAllAsync()
         {
             var books = await _unitOfWork._bookRepository.GetAllAsync();
             if (!books.Any()) return NotFound("There aren't books registered");
@@ -52,8 +52,8 @@ namespace Library.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var book = await _bookRepository.GetByIdAsync(id);
-            if (book == null) return NotFound($"Boo not found");
+            var book = await _unitOfWork._bookRepository.GetByIdAsync(id);
+            if (book is null) return NotFound("Book not found");
             var bookDto = _mapper.Map<BookDto>(book);
             return Ok(bookDto);
         }
@@ -80,6 +80,17 @@ namespace Library.Api.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> RemoveAsync(int id)
+        {
+            var book = await _bookRepository.GetByIdAsync(id);
+            if (book is null) return NotFound("Book not found");
+            await _bookRepository.RemoveAsync(book.BookId);
+            await _unitOfWork.CommitAsync();
+            return NoContent();
+        }
 
     }
 }

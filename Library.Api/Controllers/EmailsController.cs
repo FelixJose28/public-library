@@ -21,7 +21,7 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
-        public async Task SendEmail(EmailParametersDto emailParameters)
+        public async Task SendEmailAsync(EmailParametersDto emailParameters)
         {
             await _emailSender.EmailSendAsync(emailParameters);
         }

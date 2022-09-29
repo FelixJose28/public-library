@@ -18,6 +18,7 @@ namespace Library.Core.Interfaces
             _context = context;
             _dbSetEntities = _context.Set<T>();
         }
+
         public async Task<T> AddAsync(T entity)
         {
             var entityEntry = await _dbSetEntities.AddAsync(entity);
@@ -27,7 +28,7 @@ namespace Library.Core.Interfaces
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = default)
         {
             IQueryable<T> query = null;
-            if (filter == null)
+            if (filter is null)
             {
                 query = _dbSetEntities.AsNoTracking();
             }
@@ -41,7 +42,10 @@ namespace Library.Core.Interfaces
         public async Task<T> GetByIdAsync(int id)
         {
             var entity = await _dbSetEntities.FindAsync(id);
-            _context.Entry(entity).State = EntityState.Detached;
+            if (entity is not null)
+            {
+                _context.Entry(entity).State = EntityState.Detached;
+            }
             return entity;
         }
 

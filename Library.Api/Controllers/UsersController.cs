@@ -31,7 +31,7 @@ namespace Library.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
             var users = await _unitOfWork._userRepository.GetAllAsync();
             if (!users.Any()) return NotFound("There aren't user");
@@ -46,7 +46,7 @@ namespace Library.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var user = await _unitOfWork._userRepository.GetByIdAsync(id);
-            if (user == null) return NotFound("User not found");
+            if (user is null) return NotFound("User not found");
             var userDto = _mapper.Map<UserDto>(user);
             return Ok(userDto);
         }
@@ -59,10 +59,12 @@ namespace Library.Api.Controllers
             using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var user = _mapper.Map<User>(userDto);
-                await _unitOfWork._userRepository.AddAsync(user);
 
+                await _unitOfWork._userRepository.AddAsync(user);
                 await _unitOfWork.CommitAsync();
+
                 var login = MapUserToLogin(user);
+
                 await _unitOfWork._loginRepository.AddAsync(login);
                 await _unitOfWork.CommitAsync();
                 scope.Complete();
@@ -75,7 +77,7 @@ namespace Library.Api.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update(UserDto userDto)
+        public async Task<IActionResult> UpdateAsync(UserDto userDto)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
@@ -90,6 +92,19 @@ namespace Library.Api.Controllers
                 return NoContent();
 
             }
+        }
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> RemoveAsync(int id)
+        {
+            var user = await _unitOfWork._userRepository.GetByIdAsync(id);
+            if (user is null) return NotFound("User not found");
+            await _unitOfWork._userRepository.RemoveAsync(user.UserId);
+            await _unitOfWork.CommitAsync();
+            return NoContent();
         }
 
         private Login MapUserToLogin(User user)

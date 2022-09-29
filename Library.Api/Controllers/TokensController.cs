@@ -31,9 +31,9 @@ namespace Library.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Login(LoginRequestDto login)
+        public async Task<IActionResult> LoginAsync(LoginRequestDto login)
         {
-            var user = await ValidateUser(login);
+            var user = await ValidateUserAsync(login);
             if (user.Item1)
             {
                 var token = GenerateToken(user.Item2);
@@ -42,11 +42,11 @@ namespace Library.Api.Controllers
             return NotFound("User not macth");
         }
 
-        private async Task<(bool,User)> ValidateUser(LoginRequestDto login)
+        private async Task<(bool,User)> ValidateUserAsync(LoginRequestDto login)
         {
             var users = await  _unitOfWork._userRepository.GetAllAsync(x => x.Email == login.Email && x.Password == login.Password);
             var user = users.FirstOrDefault();
-            if (user == null) return (false, null);
+            if (user is null) return (false, null);
             return (true,user);
             
         }

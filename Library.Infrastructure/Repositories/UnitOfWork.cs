@@ -49,7 +49,7 @@ namespace Library.Infrastructure.Repositories
 
         public void Dispose()
         {
-            if (_context != null)
+            if (_context is not null)
             {
                 _context.Dispose();
             }

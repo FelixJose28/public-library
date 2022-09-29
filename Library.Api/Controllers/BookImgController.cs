@@ -40,7 +40,7 @@ namespace Library.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAllBook()
+        public async Task<IActionResult> GetAllAsync()
         {
             var books = await _unitOfWork._bookImgRepository.GetAllAsync();
             if (!books.Any()) return NotFound("There aren't books registered");
@@ -55,7 +55,7 @@ namespace Library.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var book = await _unitOfWork._bookImgRepository.GetByIdAsync(id);
-            if (book == null) return NotFound($"Boo not found");
+            if (book == null) return NotFound($"Book not found");
             var bookDto = _mapper.Map<BookDto>(book);
             return Ok(bookDto);
         }
@@ -85,7 +85,7 @@ namespace Library.Api.Controllers
         public async Task<IActionResult> UploadAsync([FromForm] BookImgFileDto bookImgPostDto)
         {
             BookImg bookImgCheck = await _unitOfWork._bookImgRepository.GetByIdAsync(bookImgPostDto.BookImgId);
-            if (bookImgCheck == null) return NotFound("BookImg id not found");
+            if (bookImgCheck is null) return NotFound("BookImg id not found");
             using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 string postFix = _configuration.GetValue<string>("ProjectRoot:UploadFile");

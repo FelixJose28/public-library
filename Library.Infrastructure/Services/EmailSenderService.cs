@@ -25,7 +25,7 @@ namespace Library.Infrastructure.Services
         {
             var emailConfiguration = GetEmailSendConfiguration();
             var message = GenerateEmailMessage(emailParameters, emailConfiguration.UserName, emailConfiguration.User);
-            await SendEmail(emailConfiguration,message);
+            await SendEmailAsync(emailConfiguration,message);
         }
 
 
@@ -42,7 +42,7 @@ namespace Library.Infrastructure.Services
             var emailProp =  emailConfiguration.GetType().GetProperties();
             foreach (var item in emailProp)
             {
-                if (item.GetValue(emailConfiguration) == null) throw new ArgumentNullException($"{item.Name} property can't no be null");
+                if (item.GetValue(emailConfiguration) is null) throw new ArgumentNullException($"{item.Name} property can't no be null");
             }
             return emailConfiguration;
         }
@@ -60,7 +60,7 @@ namespace Library.Infrastructure.Services
             return message;
         }
 
-        private async Task SendEmail(EmailConfiguration emailConfiguration, MimeMessage message)
+        private async Task SendEmailAsync(EmailConfiguration emailConfiguration, MimeMessage message)
         {
             using (var client = new SmtpClient())
             {

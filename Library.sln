@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Api", "Library.Api\Library.Api.csproj", "{83887C00-8A79-404F-A903-88DF1B9AF822}"
 EndProject
@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Core", "Library.Cor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{083FED5A-386F-42E4-A12C-6CD1BA0B2D67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.IntegrationTests", "Library.IntegrationTests\Library.IntegrationTests.csproj", "{6E542ED1-5173-4346-8EA9-B8C0D3787C51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.IntegrationTests", "Library.IntegrationTests\Library.IntegrationTests.csproj", "{6E542ED1-5173-4346-8EA9-B8C0D3787C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.UnitTests", "Library.UnitTests\Library.UnitTests.csproj", "{C175D778-D494-4ED5-A494-9A7C0B215755}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.UnitTests", "Library.UnitTests\Library.UnitTests.csproj", "{C175D778-D494-4ED5-A494-9A7C0B215755}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

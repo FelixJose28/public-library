@@ -68,13 +68,13 @@ namespace Library.Api.Controllers
 
 
         /// <summary>
-        /// Get all  
+        /// Get all   
         /// </summary>
         /// <returns>List of entity</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public virtual async Task<IActionResult> GetAllAsync()
         {
 
             IEnumerable<TEntity> entities;
@@ -100,12 +100,12 @@ namespace Library.Api.Controllers
         /// <summary>
         /// Get entity by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Primary key of the entity</param>
         /// <returns>An entity</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public virtual async Task<IActionResult> GetByIdAsync(int id)
         {
             TEntity entity;
             if (_isForCache)
@@ -113,28 +113,28 @@ namespace Library.Api.Controllers
                 if (!_memoryCache.TryGetValue($"{typeof(TEntity).Name}", out entity))
                 {
                     entity = await _repository.GetByIdAsync(id);
-                    if (entity == null) return NotFound($"{typeof(TEntity).Name} not found");
+                    if (entity is null) return NotFound($"{typeof(TEntity).Name} not found");
                     _memoryCache.Set($"{typeof(TEntity).Name}", entity, _cacheOptions);
                 }
             }
             else
             {
                 entity = await _repository.GetByIdAsync(id);
-                if (entity == null) return NotFound($"{typeof(TEntity).Name} not found");
+                if (entity is null) return NotFound($"{typeof(TEntity).Name} not found");
             }
             var entityDto = _mapper.Map<TEntityDto>(entity);
             return Ok(entityDto);
         }
 
         /// <summary>
-        /// Add a entity
+        /// Add an entity
         /// </summary>
         /// <param name="entityDto">The entity data transfer object</param>
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> AddAsync(TEntityDto entityDto)
+        public virtual async Task<IActionResult> AddAsync(TEntityDto entityDto)
         {
             var entity = _mapper.Map<TEntity>(entityDto);
             await _repository.AddAsync(entity);
@@ -143,17 +143,34 @@ namespace Library.Api.Controllers
         }
 
         /// <summary>
-        /// Update a entity
+        /// Update an entity
         /// </summary>
         /// <param name="entityDto">The entity data transfer object</param>
         /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateAsync(TEntityDto entityDto)
+        public virtual async Task<IActionResult> UpdateAsync(TEntityDto entityDto)
         {
             var entity = _mapper.Map<TEntity>(entityDto);
             _repository.Update(entity);
+            await _unitOfWork.CommitAsync();
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Remove an entity
+        /// </summary>
+        /// <param name="id">Primary key of the entity</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> RemoveAsync(int id)
+        {
+            var entity = await _repository.GetByIdAsync(id);
+            if (entity is null) return NotFound($"{typeof(TEntity).Name} not found");
+            await _repository.RemoveAsync(id);
             await _unitOfWork.CommitAsync();
             return NoContent();
         }
