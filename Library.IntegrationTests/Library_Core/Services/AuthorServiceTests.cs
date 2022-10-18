@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Library.Core.QueryFilters;
 
 namespace Library.IntegrationTests.Library_Core.Services
 {
@@ -69,11 +70,15 @@ namespace Library.IntegrationTests.Library_Core.Services
         {
             //Arrange
             var authorListModel = _fixture.CreateMany<Author>(3).ToList();
+
+            var authorQueryFilter = new AuthorQueryFilter();
+            authorQueryFilter.PageSize = int.MaxValue;
+            authorQueryFilter.PageNumber= int.MaxValue;
             _unitOfWork.Setup(x => x._authorReporitory.GetAllAsync(default))
                 .ReturnsAsync(authorListModel);
 
             //Act
-            var authorList = await _sut.GetAuthorsAsync();
+            var authorList = await _sut.GetAuthorsAsync(authorQueryFilter);
 
             //Assert
             Assert.NotNull(authorList);

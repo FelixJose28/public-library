@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Library.Api.Extensions;
+using Library.Core.CustomEntities.Pagination;
 using Library.Core.Interfaces;
 using Library.Core.Interfaces.Services;
 using Library.Core.Services;
@@ -10,6 +11,7 @@ using Library.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -51,9 +53,10 @@ namespace Library.Api
                 options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
             }).AddNewtonsoftJson(options =>
             {
+                //Configure serialization 
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                //Cuando este serializando y encuentre una propiedad que este nula, que a ignore
-                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                //Cuando este serializando y encuentre una propiedad que este nula, que la ignore, jemplo: so hago un get a la fuente de datos y uno de los registros tiene una propiedad nula, pues se ignora y no se retorna en el respos
+                //options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             });
 
 
@@ -64,7 +67,7 @@ namespace Library.Api
 
 
 
-
+            services.Configure<PaginationOptions>(Configuration.GetSection("Pagination"));
 
             services.AddMemoryCache();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -74,6 +77,13 @@ namespace Library.Api
             services.RepositoryServices();
 
             services.AddTransient<IEmailSenderService, EmailSenderService>();
+            services.AddSingleton<IUriService>(provider =>
+            {
+                var accesor = provider.GetRequiredService<IHttpContextAccessor>();
+                var request = accesor.HttpContext.Request;
+                var absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(absoluteUri);
+            });
 
             services.SwaggerConfiguration();
             services.AuthenticationJwtConfiguration(Configuration);

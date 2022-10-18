@@ -12,10 +12,10 @@ namespace Library.Core.CustomEntities.Pagination
         public int TotalPages { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
-        public bool HasPreviuPage => CurrentPage > 1;
+        public bool HasPreviousPage => CurrentPage > 1;
         public bool HasNextPage => CurrentPage < TotalPages;
         public int? NextPageNumber => HasNextPage ? CurrentPage + 1 : (int?)null;
-        public int? PreviusPageNumber => HasPreviuPage ? CurrentPage - 1 : (int?)null;
+        public int? PreviousPageNumber => HasPreviousPage ? CurrentPage - 1 : (int?)null;
 
         public PagedList(List<T> items, int count, int pageNumber, int pageSize)
         {

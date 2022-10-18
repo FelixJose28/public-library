@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Repositories\RegisterBookRepository.cs~RF34123a16.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Library.Core\Library.Core.csproj" />
   </ItemGroup>
 
