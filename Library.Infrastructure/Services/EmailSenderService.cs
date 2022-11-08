@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Infrastructure.Interfaces;
 using MimeKit.Text;
 using Microsoft.Extensions.Configuration;
 using Library.Core.Dtos.Customs;
+using Library.Core.Interfaces.Infrastructure;
 
 namespace Library.Infrastructure.Services
 {

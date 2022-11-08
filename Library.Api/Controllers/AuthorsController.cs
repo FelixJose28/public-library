@@ -13,7 +13,7 @@ using Library.Core.QueryFilters;
 using Library.Core.Dtos;
 using Library.Core.CustomEntities.Pagination;
 using Newtonsoft.Json;
-using Library.Infrastructure.Interfaces;
+using Library.Core.Interfaces.Infrastructure;
 
 namespace Library.Api.Controllers
 {

@@ -1,5 +1,5 @@
-﻿using Library.Core.QueryFilters;
-using Library.Infrastructure.Interfaces;
+﻿using Library.Core.Interfaces.Infrastructure;
+using Library.Core.QueryFilters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
