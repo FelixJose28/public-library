@@ -7,12 +7,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Api.Extensions
 {
@@ -36,7 +33,7 @@ namespace Library.Api.Extensions
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<ITelephoneRepository, TelephoneRepository>();
             services.AddTransient<IBookImgRepository, BookImgRepository>();
-            
+
         }
 
 

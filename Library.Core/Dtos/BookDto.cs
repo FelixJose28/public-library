@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Library.Core.Dtos
+﻿namespace Library.Core.Dtos
 {
     public class BookDto : BaseEntityDto
     {

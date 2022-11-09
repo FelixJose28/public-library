@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Library.Core.QueryFilters
+﻿namespace Library.Core.QueryFilters
 {
-    public class AuthorQueryFilter: PagedListQueryFilter
+    public class AuthorQueryFilter : PagedListQueryFilter
     {
     }
 }

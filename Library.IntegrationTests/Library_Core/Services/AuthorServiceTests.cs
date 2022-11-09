@@ -1,17 +1,14 @@
 ﻿using AutoFixture;
-using AutoMapper;
-using Library.Core.Interfaces;
+using Library.Core.CustomEntities.Pagination;
 using Library.Core.Entities;
+using Library.Core.Interfaces;
+using Library.Core.QueryFilters;
 using Library.Core.Services;
-using Library.Infrastructure.Mappings;
+using Microsoft.Extensions.Options;
 using Moq;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Library.Core.QueryFilters;
 
 namespace Library.IntegrationTests.Library_Core.Services
 {
@@ -19,11 +16,13 @@ namespace Library.IntegrationTests.Library_Core.Services
     {
         private readonly AuthorService _sut;
         private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
+        private readonly Mock<IOptions<PaginationOptions>> paginationOptions = new Mock<IOptions<PaginationOptions>>();
+        private readonly Mock<PaginationOptions> _paginationOptions = new Mock<PaginationOptions>();
         private readonly Fixture _fixture;
 
         public AuthorServiceTests()
         {
-            _sut = new AuthorService(_unitOfWork.Object);
+            _sut = new AuthorService(_unitOfWork.Object, paginationOptions.Object);
             _fixture = new Fixture();
             _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
@@ -73,7 +72,7 @@ namespace Library.IntegrationTests.Library_Core.Services
 
             var authorQueryFilter = new AuthorQueryFilter();
             authorQueryFilter.PageSize = int.MaxValue;
-            authorQueryFilter.PageNumber= int.MaxValue;
+            authorQueryFilter.PageNumber = int.MaxValue;
             _unitOfWork.Setup(x => x._authorReporitory.GetAllAsync(default))
                 .ReturnsAsync(authorListModel);
 

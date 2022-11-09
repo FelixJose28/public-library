@@ -1,19 +1,18 @@
 ﻿using AutoMapper;
+using Library.Core.CustomEntities.Pagination;
+using Library.Core.Dtos;
+using Library.Core.Entities;
 using Library.Core.Interfaces;
+using Library.Core.Interfaces.Infrastructure;
+using Library.Core.Interfaces.Services;
+using Library.Core.QueryFilters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
-using Library.Core.Interfaces.Services;
-using Library.Core.Entities;
-using Library.Core.QueryFilters;
-using Library.Core.Dtos;
-using Library.Core.CustomEntities.Pagination;
-using Newtonsoft.Json;
-using Library.Core.Interfaces.Infrastructure;
 
 namespace Library.Api.Controllers
 {
@@ -21,11 +20,11 @@ namespace Library.Api.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-            private readonly IAuthorRepository _repository; 
-            private readonly IMapper _mapper;
-            private readonly IMemoryCache _memoryCache;
-            private readonly IAuthorService _authorService;
-            private readonly IUriService _uriService;
+        private readonly IAuthorRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly IMemoryCache _memoryCache;
+        private readonly IAuthorService _authorService;
+        private readonly IUriService _uriService;
 
         public AuthorsController(
             IAuthorRepository repository,
@@ -48,7 +47,7 @@ namespace Library.Api.Controllers
         [HttpGet(Name = nameof(GetAllAsync))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync([FromQuery]AuthorQueryFilter filters)
+        public async Task<IActionResult> GetAllAsync([FromQuery] AuthorQueryFilter filters)
         {
             var authors = await _authorService.GetAuthorsAsync(filters);
             if (!authors.Any()) return NotFound("There aren't authors registered");
@@ -64,7 +63,7 @@ namespace Library.Api.Controllers
                 NextPageUrl = _uriService.GetPostPaginationUri(filters, Url.RouteUrl(nameof(GetAllAsync))).ToString(),
                 PreviousPageUrl = _uriService.GetPostPaginationUri(filters, Url.RouteUrl(nameof(GetAllAsync))).ToString(),
             };
-            Response.Headers.Add("x-Pagination",JsonConvert.SerializeObject(metadata));
+            Response.Headers.Add("x-Pagination", JsonConvert.SerializeObject(metadata));
             return Ok(authorsDto);
         }
 

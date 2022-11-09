@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Library.Core.Entities
+﻿namespace Library.Core.Entities
 {
     public class Telephone : BaseEntity
     {

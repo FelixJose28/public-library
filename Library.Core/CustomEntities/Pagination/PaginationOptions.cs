@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Library.Core.CustomEntities.Pagination
+﻿namespace Library.Core.CustomEntities.Pagination
 {
     public class PaginationOptions
     {

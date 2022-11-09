@@ -4,11 +4,6 @@ using Library.Core.Interfaces;
 using Library.Core.Interfaces.Services;
 using Library.Core.QueryFilters;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Library.Core.Services
@@ -31,9 +26,9 @@ namespace Library.Core.Services
         public async Task<PagedList<Author>> GetAuthorsAsync(AuthorQueryFilter filters)
         {
             var authors = await _unitOfWork._authorReporitory.GetAllAsync();
-            filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber: filters.PageNumber;
+            filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
             filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
-            var authorsPaged = PagedList<Author>.Create(authors,filters.PageNumber,filters.PageSize);
+            var authorsPaged = PagedList<Author>.Create(authors, filters.PageNumber, filters.PageSize);
             return authorsPaged;
         }
 

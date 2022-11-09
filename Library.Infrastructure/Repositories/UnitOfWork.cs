@@ -1,9 +1,5 @@
 ﻿using Library.Core.Interfaces;
 using Library.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Repositories
@@ -21,8 +17,8 @@ namespace Library.Infrastructure.Repositories
 
         public UnitOfWork(
             DBLibraryContext context,
-            IAlertRepository alertRepository, 
-            IAuthorRepository authorReporitory, 
+            IAlertRepository alertRepository,
+            IAuthorRepository authorReporitory,
             IBookRepository bookRepository,
             IBookImgRepository bookImgRepository,
             IUserRepository userRepository,
@@ -34,7 +30,7 @@ namespace Library.Infrastructure.Repositories
             _bookRepository = bookRepository;
             _bookImgRepository = bookImgRepository;
             _userRepository = userRepository;
-            _loginRepository = loginRepository;            
+            _loginRepository = loginRepository;
         }
 
         public void Commit()

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Library.Core.Interfaces;
 using Library.Core.Dtos;
 using Library.Core.Dtos.Customs;
 using Library.Core.Entities;
+using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -92,7 +92,7 @@ namespace Library.Api.Controllers
                 string filePath = GetFilePath(@$"{postFix}", bookImgPostDto.Document);
                 await UploadFile(filePath, bookImgPostDto.Document);
                 DeleteFile(bookImgCheck.Route);
-                BookImg bookImg = BookImgFileDtoToBookImg(bookImgPostDto, filePath,false);
+                BookImg bookImg = BookImgFileDtoToBookImg(bookImgPostDto, filePath, false);
                 _unitOfWork._bookImgRepository.Update(bookImg);
                 await _unitOfWork.CommitAsync();
                 scope.Complete();

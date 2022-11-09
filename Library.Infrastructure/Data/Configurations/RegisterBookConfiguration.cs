@@ -1,8 +1,6 @@
 ﻿using Library.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
 
 namespace Library.Infrastructure.Data.Configurations
 {
@@ -12,7 +10,7 @@ namespace Library.Infrastructure.Data.Configurations
         {
             entity.ToTable("RegisterBook");
 
-            entity.HasKey(e =>e.RegisterBookId);
+            entity.HasKey(e => e.RegisterBookId);
 
             entity.Property(e => e.ModificationDate).HasColumnType("datetime");
 

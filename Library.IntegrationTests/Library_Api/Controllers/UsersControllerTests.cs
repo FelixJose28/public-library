@@ -1,17 +1,15 @@
 ﻿using AutoFixture;
 using AutoMapper;
 using Library.Api.Controllers;
-using Library.Core.Interfaces;
 using Library.Core.Dtos;
 using Library.Core.Entities;
+using Library.Core.Interfaces;
 using Library.Infrastructure.Mappings;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -36,7 +34,7 @@ namespace Library.IntegrationTests.Library_Api.Controllers
         }
 
 
-        [Fact] 
+        [Fact]
         public async Task GetAllAsync_WhenUsersExists_ReturnUsers()
         {
             //Arrange
@@ -125,7 +123,7 @@ namespace Library.IntegrationTests.Library_Api.Controllers
             var user = _fixture.Create<User>();
             var userDto = _mapperReal.Map<UserDto>(user);
             var login = MapUserToLogin(user);
-            
+
             _mapper.Setup(x => x.Map<User>(userDto))
                 .Returns(user);
 
@@ -158,7 +156,7 @@ namespace Library.IntegrationTests.Library_Api.Controllers
                 .Returns(user);
 
             var login = MapUserToLogin(user);
-            _unitOfWork.Setup(x=>x._loginRepository.Update(login));
+            _unitOfWork.Setup(x => x._loginRepository.Update(login));
             _unitOfWork.Setup(x => x._userRepository.Update(user));
 
             //Atc

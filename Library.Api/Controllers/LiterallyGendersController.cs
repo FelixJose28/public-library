@@ -1,23 +1,17 @@
 ﻿using AutoMapper;
-using Library.Core.Interfaces;
 using Library.Core.Dtos;
 using Library.Core.Entities;
-using Library.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Http;
+using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LiteraryGenderController : GenericController<LiteraryGender, LiteraryGenderDto, ILiteraryGenderRepository,IUnitOfWork>
+    public class LiteraryGenderController : GenericController<LiteraryGender, LiteraryGenderDto, ILiteraryGenderRepository, IUnitOfWork>
     {
-        public LiteraryGenderController(ILiteraryGenderRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(repository, mapper, unitOfWork,memoryCache,true,24)
+        public LiteraryGenderController(ILiteraryGenderRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(repository, mapper, unitOfWork, memoryCache, true, 24)
         {
         }
     }

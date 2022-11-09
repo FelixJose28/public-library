@@ -1,9 +1,6 @@
-﻿using System;
-using System.Reflection;
-using Library.Core.Entities;
-using Library.Infrastructure.Data.Configurations;
+﻿using Library.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System.Reflection;
 
 namespace Library.Infrastructure.Data
 {

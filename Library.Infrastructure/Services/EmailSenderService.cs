@@ -1,14 +1,11 @@
-﻿using MailKit.Net.Smtp;
-using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MimeKit.Text;
-using Microsoft.Extensions.Configuration;
-using Library.Core.Dtos.Customs;
+﻿using Library.Core.Dtos.Customs;
 using Library.Core.Interfaces.Infrastructure;
+using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
+using MimeKit;
+using MimeKit.Text;
+using System;
+using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Services
 {
@@ -25,7 +22,7 @@ namespace Library.Infrastructure.Services
         {
             var emailConfiguration = GetEmailSendConfiguration();
             var message = GenerateEmailMessage(emailParameters, emailConfiguration.UserName, emailConfiguration.User);
-            await SendEmailAsync(emailConfiguration,message);
+            await SendEmailAsync(emailConfiguration, message);
         }
 
 
@@ -39,7 +36,7 @@ namespace Library.Infrastructure.Services
                 UserName = _configuration.GetValue<string>("EmailConfiguration:UserName"),
                 Password = _configuration.GetValue<string>("EmailConfiguration:Password")
             };
-            var emailProp =  emailConfiguration.GetType().GetProperties();
+            var emailProp = emailConfiguration.GetType().GetProperties();
             foreach (var item in emailProp)
             {
                 if (item.GetValue(emailConfiguration) is null) throw new ArgumentNullException($"{item.Name} property can't no be null");
@@ -66,7 +63,7 @@ namespace Library.Infrastructure.Services
             {
                 await client.ConnectAsync(
                     emailConfiguration.Host,
-                    emailConfiguration.Port, 
+                    emailConfiguration.Port,
                     MailKit.Security.SecureSocketOptions.StartTls);
                 await client.AuthenticateAsync(emailConfiguration.User, emailConfiguration.Password);
                 await client.SendAsync(message);

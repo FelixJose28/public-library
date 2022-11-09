@@ -4,10 +4,6 @@ using Library.Infrastructure.Data;
 using Library.IntegrationTests.Common;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,8 +19,8 @@ namespace Library.IntegrationTests.Library_Infrastructure.Repositories
             _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
-        
-        
+
+
         [Fact(Skip = "should past bu throw:  System.ArgumentException : Can not instantiate proxy of class: Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry")]
         public async Task GetByIdAsync_WhenEntityExists_ReturnTheEntity()
         {
@@ -34,7 +30,7 @@ namespace Library.IntegrationTests.Library_Infrastructure.Repositories
             var _contextMock = new Mock<DBLibraryContext>();
             var _dbSetMock = new Mock<DbSet<TestClass>>();
 
-            
+
 
 
 
@@ -44,7 +40,7 @@ namespace Library.IntegrationTests.Library_Infrastructure.Repositories
 
             _contextMock.Setup(x => x.Entry(entity).State).Returns(EntityState.Detached);
             //_contextMock.Object.Entry(null).State = EntityState.Detached;
-            
+
             _dbSetMock.Setup(x => x.FindAsync(entityId))
             .ReturnsAsync(entity)
             ;
@@ -60,6 +56,6 @@ namespace Library.IntegrationTests.Library_Infrastructure.Repositories
             Assert.Equal(entityId, entity.Id);
             _dbSetMock.Verify(x => x.FindAsync(entityId), Times.Once());
 
-        }     
+        }
     }
 }

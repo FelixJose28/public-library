@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Library.Core.Entities
+﻿namespace Library.Core.Entities
 {
-    public class Alert: BaseEntity
+    public class Alert : BaseEntity
     {
         public int AlertId { get; set; }
         public string Info { get; set; }

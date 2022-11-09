@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Library.Core.Dtos
+﻿namespace Library.Core.Dtos
 {
-    public class AuthorDto: BaseEntityDto
+    public class AuthorDto : BaseEntityDto
     {
         public int AuthorId { get; set; }
         public string FirstName { get; set; }

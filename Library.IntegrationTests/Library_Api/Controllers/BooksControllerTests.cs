@@ -1,17 +1,14 @@
 ﻿using AutoFixture;
 using AutoMapper;
 using Library.Api.Controllers;
-using Library.Core.Interfaces;
 using Library.Core.Dtos;
 using Library.Core.Entities;
-using Library.Infrastructure.Mappings;
+using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,7 +21,7 @@ namespace Library.IntegrationTests.Library_Api.Controllers
         private readonly Mock<IMapper> _mapper = new Mock<IMapper>();
         private readonly Mock<IBookRepository> _bookRepository = new Mock<IBookRepository>();
         private readonly Fixture _fixture;
-        private readonly MapperConfiguration config = new MapperConfiguration(cfg => cfg.CreateMap<Book,BookDto>().ReverseMap());
+        private readonly MapperConfiguration config = new MapperConfiguration(cfg => cfg.CreateMap<Book, BookDto>().ReverseMap());
         //this configuration will get AutoMapperProfile that contain all the mapping configuration for all the entities
         //private readonly MapperConfiguration config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>()); 
         private readonly IMapper _mapperReal;
@@ -39,7 +36,7 @@ namespace Library.IntegrationTests.Library_Api.Controllers
             _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
             _mapperReal = config.CreateMapper();
-            
+
         }
 
         [Fact]

@@ -1,14 +1,10 @@
 ﻿using Library.Core.Interfaces.Infrastructure;
 using Library.Core.QueryFilters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Services
 {
-    public class UriService:IUriService
+    public class UriService : IUriService
     {
         private readonly string _baseUri;
         public UriService(string baseUri)
@@ -16,7 +12,7 @@ namespace Library.Infrastructure.Services
             _baseUri = baseUri;
         }
         //obtiene la url de los posts
-        public Uri GetPostPaginationUri(AuthorQueryFilter filters,string actionUrl)
+        public Uri GetPostPaginationUri(AuthorQueryFilter filters, string actionUrl)
         {
             string baseUrl = $"{_baseUri}{actionUrl}";
             return new Uri(baseUrl);

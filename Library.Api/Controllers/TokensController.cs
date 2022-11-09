@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -21,7 +20,7 @@ namespace Library.Api.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
-       
+
         public TokensController(IConfiguration configuration, IUnitOfWork unitOfWork)
         {
             _configuration = configuration;
@@ -37,18 +36,18 @@ namespace Library.Api.Controllers
             if (user.Item1)
             {
                 var token = GenerateToken(user.Item2);
-                return Ok(new { token }); 
+                return Ok(new { token });
             }
             return NotFound("User not macth");
         }
 
-        private async Task<(bool,User)> ValidateUserAsync(LoginRequestDto login)
+        private async Task<(bool, User)> ValidateUserAsync(LoginRequestDto login)
         {
-            var users = await  _unitOfWork._userRepository.GetAllAsync(x => x.Email == login.Email && x.Password == login.Password);
+            var users = await _unitOfWork._userRepository.GetAllAsync(x => x.Email == login.Email && x.Password == login.Password);
             var user = users.FirstOrDefault();
             if (user is null) return (false, null);
-            return (true,user);
-            
+            return (true, user);
+
         }
 
 

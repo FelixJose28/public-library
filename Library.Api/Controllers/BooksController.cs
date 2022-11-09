@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using Library.Core.Interfaces;
-using Library.Core.Interfaces.Services;
 using Library.Core.Dtos;
 using Library.Core.Entities;
-using Microsoft.AspNetCore.Authorization;
+using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -66,7 +63,7 @@ namespace Library.Api.Controllers
             var book = _mapper.Map<Book>(bookDto);
             await _bookRepository.AddAsync(book);
             await _unitOfWork.CommitAsync();
-            return CreatedAtAction(nameof(GetByIdAsync),new { id = book.AuthorId }, bookDto);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = book.AuthorId }, bookDto);
         }
 
         [HttpPut]

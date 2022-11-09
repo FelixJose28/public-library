@@ -1,15 +1,9 @@
 ﻿using FluentValidation;
 using Library.Core.Dtos;
-using Library.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Validators
 {
-    public class UserValidator:AbstractValidator<UserDto>
+    public class UserValidator : AbstractValidator<UserDto>
     {
         public UserValidator()
         {
@@ -19,7 +13,7 @@ namespace Library.Infrastructure.Validators
                 .NotEmpty()
                 .MaximumLength(100);
 
-            RuleFor(x=>x.Password)
+            RuleFor(x => x.Password)
                 .NotEmpty()
                 .Equal(x => x.ConfirmPassword)
                 .MaximumLength(100);
@@ -27,7 +21,7 @@ namespace Library.Infrastructure.Validators
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .EmailAddress();
-                //.Matches(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
+            //.Matches(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
 
             RuleFor(x => x.FirstName)
                 .MaximumLength(50)
