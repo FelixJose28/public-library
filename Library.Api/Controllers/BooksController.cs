@@ -39,6 +39,7 @@ namespace Library.Api.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var books = await _unitOfWork._bookRepository.GetAllAsync();
+            var p = books.GetType().FullName;
             if (!books.Any()) return NotFound("There aren't books registered");
             var booksDto = _mapper.Map<IEnumerable<BookDto>>(books);
             return Ok(booksDto);

@@ -1,4 +1,5 @@
-﻿using Library.Infrastructure.Data;
+﻿using Library.Core.Interfaces;
+using Library.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Library.Core.Interfaces
+namespace Library.Infrastructure.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

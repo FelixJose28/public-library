@@ -42,7 +42,8 @@ namespace Library.Api
             {
                 //Configure serialization 
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                //Cuando este serializando y encuentre una propiedad que este nula, que la ignore, jemplo: so hago un get a la fuente de datos y uno de los registros tiene una propiedad nula, pues se ignora y no se retorna en el respos
+
+                //Cuando este serializando y encuentre una propiedad que este nula, que la ignore, ejemplo: si hago un get a la fuente de datos y uno de los registros tiene una propiedad nula, pues se ignora y no se retorna en el response
                 //options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             });
 

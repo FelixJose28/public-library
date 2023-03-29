@@ -2,7 +2,6 @@
 using Library.Core.CustomEntities.Pagination;
 using Library.Core.Dtos;
 using Library.Core.Entities;
-using Library.Core.Interfaces;
 using Library.Core.Interfaces.Infrastructure;
 using Library.Core.Interfaces.Services;
 using Library.Core.QueryFilters;
@@ -20,20 +19,17 @@ namespace Library.Api.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly IAuthorRepository _repository;
         private readonly IMapper _mapper;
         private readonly IMemoryCache _memoryCache;
         private readonly IAuthorService _authorService;
         private readonly IUriService _uriService;
 
         public AuthorsController(
-            IAuthorRepository repository,
             IMapper mapper,
             IMemoryCache memoryCache,
             IAuthorService authorService,
             IUriService uriService)
         {
-            _repository = repository;
             _mapper = mapper;
             _memoryCache = memoryCache;
             _authorService = authorService;

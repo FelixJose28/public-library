@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
-using Library.Core.Interfaces;
 using Library.Infrastructure.Data;
+using Library.Infrastructure.Repositories;
 using Library.IntegrationTests.Common;
 using Microsoft.EntityFrameworkCore;
 using Moq;
