@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Library.Infrastructure.Services
 {
     //adding from master
+    //adding other thing
     public class EmailSenderService : IEmailSenderService
     {
         private readonly IConfiguration _configuration;
