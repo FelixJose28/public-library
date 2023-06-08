@@ -11,11 +11,8 @@ namespace Library.Infrastructure.Services
 {
     //adding from master
     //adding other thing
-<<<<<<< HEAD
     //master modificado
-=======
     //modificacion desde develop
->>>>>>> develop
     public class EmailSenderService : IEmailSenderService
     {
         //cambio en develop
