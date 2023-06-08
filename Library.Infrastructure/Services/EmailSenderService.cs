@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Services
 {
+    //adding from master
     public class EmailSenderService : IEmailSenderService
     {
         private readonly IConfiguration _configuration;
