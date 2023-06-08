@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Services
 {
+    //adding from master
+    //adding other thing
     public class EmailSenderService : IEmailSenderService
     {
         private readonly IConfiguration _configuration;
@@ -61,10 +63,13 @@ namespace Library.Infrastructure.Services
         {
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync(
+                await client.ConnectAsync
+                (
                     emailConfiguration.Host,
                     emailConfiguration.Port,
-                    MailKit.Security.SecureSocketOptions.StartTls);
+                    MailKit.Security.SecureSocketOptions.StartTls
+                );
+
                 await client.AuthenticateAsync(emailConfiguration.User, emailConfiguration.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
