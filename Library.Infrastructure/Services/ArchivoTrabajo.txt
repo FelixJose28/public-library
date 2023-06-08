@@ -1,1 +1,2 @@
-trabajo companero remoto
+
+trabajo local
