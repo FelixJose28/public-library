@@ -155,6 +155,8 @@ namespace Library.Api.Controllers
             var entity = _mapper.Map<TEntity>(entityDto);
             _repository.Update(entity);
             await _unitOfWork.CommitAsync();
+            _memoryCache.Remove($"{typeof(TEntity).Name}");
+            _memoryCache.Remove($"{typeof(TEntity).Name}s");
             return NoContent();
         }
 
@@ -172,6 +174,8 @@ namespace Library.Api.Controllers
             if (entity is null) return NotFound($"{typeof(TEntity).Name} not found");
             await _repository.RemoveAsync(id);
             await _unitOfWork.CommitAsync();
+            _memoryCache.Remove($"{typeof(TEntity).Name}");
+            _memoryCache.Remove($"{typeof(TEntity).Name}s");
             return NoContent();
         }
     }

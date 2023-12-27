@@ -4,6 +4,8 @@ using Library.Core.Entities;
 using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,15 +19,22 @@ namespace Library.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
+        private readonly IMemoryCache _memoryCache;
+        private readonly MemoryCacheEntryOptions _cacheOptions;
+
         public BooksController(
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            IBookRepository bookRepository
+            IBookRepository bookRepository,
+            IMemoryCache memoryCache
             )
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _bookRepository = bookRepository;
+            _memoryCache = memoryCache;
+            _cacheOptions = new MemoryCacheEntryOptions()
+                       .SetSlidingExpiration(TimeSpan.FromMinutes(1));
         }
 
 
@@ -38,9 +47,13 @@ namespace Library.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync()
         {
-            var books = await _unitOfWork._bookRepository.GetAllAsync();
-            var p = books.GetType().FullName;
-            if (!books.Any()) return NotFound("There aren't books registered");
+            IEnumerable<Book> books;
+            if (!_memoryCache.TryGetValue($"{typeof(Book).Name}s", out books))
+            {
+                books = await _bookRepository.GetAllAsync();
+                if (!books.Any()) return NotFound($"There aren't {typeof(Book).Name}");
+                _memoryCache.Set($"{typeof(Book).Name}s", books, _cacheOptions);
+            }
             var booksDto = _mapper.Map<IEnumerable<BookDto>>(books);
             return Ok(booksDto);
         }
@@ -50,7 +63,14 @@ namespace Library.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var book = await _unitOfWork._bookRepository.GetByIdAsync(id);
+            Book book;
+            if (!_memoryCache.TryGetValue($"{typeof(Book).Name}", out book))
+            {
+                book = await _bookRepository.GetByIdAsync(id);
+                if (book is null) return NotFound($"{typeof(Book).Name} not found");
+                _memoryCache.Set($"{typeof(Book).Name}", book, _cacheOptions);
+            }
+
             if (book is null) return NotFound("Book not found");
             var bookDto = _mapper.Map<BookDto>(book);
             return Ok(bookDto);
@@ -75,6 +95,8 @@ namespace Library.Api.Controllers
             var book = _mapper.Map<Book>(bookDto);
             _bookRepository.Update(book);
             await _unitOfWork.CommitAsync();
+            _memoryCache.Remove($"{typeof(Book).Name}");
+            _memoryCache.Remove($"{typeof(Book).Name}s");
             return NoContent();
         }
 
@@ -87,6 +109,8 @@ namespace Library.Api.Controllers
             if (book is null) return NotFound("Book not found");
             await _bookRepository.RemoveAsync(book.BookId);
             await _unitOfWork.CommitAsync();
+            _memoryCache.Remove($"{typeof(Book).Name}");
+            _memoryCache.Remove($"{typeof(Book).Name}s");
             return NoContent();
         }
 
