@@ -11,7 +11,7 @@ namespace Library.Api.Controllers
     [ApiController]
     public class PublishersController : GenericController<Publisher, PublisherDto, IPublisherRepository, IUnitOfWork>
     {
-        public PublishersController(IPublisherRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(repository, mapper, unitOfWork, memoryCache, true, 24)
+        public PublishersController(IPublisherRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(repository, mapper, unitOfWork, memoryCache, true, 5)
         {
         }
     }

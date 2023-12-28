@@ -34,7 +34,7 @@ namespace Library.Api.Controllers
             _bookRepository = bookRepository;
             _memoryCache = memoryCache;
             _cacheOptions = new MemoryCacheEntryOptions()
-                       .SetSlidingExpiration(TimeSpan.FromMinutes(1));
+                       .SetSlidingExpiration(TimeSpan.FromMinutes(5));
         }
 
 
@@ -84,6 +84,8 @@ namespace Library.Api.Controllers
             var book = _mapper.Map<Book>(bookDto);
             await _bookRepository.AddAsync(book);
             await _unitOfWork.CommitAsync();
+            _memoryCache.Remove($"{typeof(Book).Name}");
+            _memoryCache.Remove($"{typeof(Book).Name}s");
             return CreatedAtAction(nameof(GetByIdAsync), new { id = book.AuthorId }, bookDto);
         }
 

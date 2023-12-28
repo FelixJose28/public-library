@@ -63,7 +63,7 @@ namespace Library.Api.Controllers
             _isForCache = isForCache;
             _cacheLifetimeHours = cacheLifetimeHours;
             _cacheOptions = new MemoryCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromHours(12));
+                        .SetSlidingExpiration(TimeSpan.FromMinutes(1000));
         }
 
 
@@ -139,6 +139,8 @@ namespace Library.Api.Controllers
             var entity = _mapper.Map<TEntity>(entityDto);
             await _repository.AddAsync(entity);
             await _unitOfWork.CommitAsync();
+            _memoryCache.Remove($"{typeof(TEntity).Name}");
+            _memoryCache.Remove($"{typeof(TEntity).Name}s");
             return Created(nameof(GetByIdAsync), entityDto);
         }
 
