@@ -16,5 +16,6 @@
         public string Street { get; set; }
         public string HouseNumber { get; set; }
         public int RoleId { get; set; }
+        public string UserCode { get; set; }
     }
 }

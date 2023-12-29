@@ -5,6 +5,7 @@ using Library.Core.Dtos;
 using Library.Core.Entities;
 using Library.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace Library.IntegrationTests.Library_Api.Controllers
         private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         private readonly Mock<IMapper> _mapper = new Mock<IMapper>();
         private readonly Mock<IBookRepository> _bookRepository = new Mock<IBookRepository>();
+        private readonly Mock<IMemoryCache> _memoryCache = new Mock<IMemoryCache>();
+
         private readonly Fixture _fixture;
         private readonly MapperConfiguration config = new MapperConfiguration(cfg => cfg.CreateMap<Book, BookDto>().ReverseMap());
         //this configuration will get AutoMapperProfile that contain all the mapping configuration for all the entities
@@ -31,7 +34,7 @@ namespace Library.IntegrationTests.Library_Api.Controllers
         //The expected behavior when the scenario is invoked
         public BooksControllerTests()
         {
-            _sut = new BooksController(_unitOfWork.Object, _mapper.Object, _bookRepository.Object);
+            _sut = new BooksController(_unitOfWork.Object, _mapper.Object, _bookRepository.Object, _memoryCache.Object);
             _fixture = new Fixture();
             _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());

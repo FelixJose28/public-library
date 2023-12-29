@@ -25,6 +25,7 @@ namespace Library.Core.Entities
         public string Street { get; set; }
         public string HouseNumber { get; set; }
         public int RoleId { get; set; }
+        public string UserCode { get; set; }
 
         public virtual Role Role { get; set; }
         public virtual ICollection<Alert> Alerts { get; set; }

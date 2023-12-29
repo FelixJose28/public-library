@@ -59,6 +59,11 @@ namespace Library.Infrastructure.Validators
 
             RuleFor(x => x.RoleId)
                 .NotNull();
+
+            RuleFor(x => x.UserCode)
+                .NotEmpty()
+                .MaximumLength(10);
+
         }
     }
 }

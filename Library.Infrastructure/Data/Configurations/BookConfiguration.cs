@@ -37,6 +37,15 @@ namespace Library.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
 
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(50);
+
+
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasMaxLength(250);
+
             entity.HasOne(d => d.Author)
                 .WithMany(p => p.Books)
                 .HasForeignKey(d => d.AuthorId)

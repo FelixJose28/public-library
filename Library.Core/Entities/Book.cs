@@ -16,6 +16,8 @@ namespace Library.Core.Entities
         public int? PublisherId { get; set; }
         public int? LiteraryGenderId { get; set; }
         public int? BookImgId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
 
         public virtual Author Author { get; set; }
         public virtual LiteraryGender LiteraryGender { get; set; }

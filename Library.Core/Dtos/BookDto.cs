@@ -9,5 +9,7 @@
         public int? PublisherId { get; set; }
         public int? LiteraryGenderId { get; set; }
         public int? BookImgId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -24,13 +24,15 @@ namespace Library.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(50);
 
-            entity.Property(e => e.FirstSurname).HasMaxLength(50);
+            entity.Property(e => e.FirstSurname)
+                .HasMaxLength(50);
 
             entity.Property(e => e.HouseNumber)
                 .HasMaxLength(5)
                 .IsUnicode(false);
 
-            entity.Property(e => e.ModificationDate).HasColumnType("datetime");
+            entity.Property(e => e.ModificationDate)
+                .HasColumnType("datetime");
 
             entity.Property(e => e.ModifiedBy)
                 .HasMaxLength(45)
@@ -40,7 +42,8 @@ namespace Library.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
-            entity.Property(e => e.Municipality).HasMaxLength(100);
+            entity.Property(e => e.Municipality)
+                .HasMaxLength(100);
 
             entity.Property(e => e.Password)
                 .IsRequired()
@@ -55,17 +58,28 @@ namespace Library.Infrastructure.Data.Configurations
                 .HasMaxLength(45)
                 .IsUnicode(false);
 
-            entity.Property(e => e.RegistrationDate).HasColumnType("datetime");
+            entity.Property(e => e.RegistrationDate)
+                .HasColumnType("datetime");
 
             entity.Property(e => e.RegistrationStatus)
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
 
-            entity.Property(e => e.SecondName).HasMaxLength(50);
+            entity.Property(e => e.SecondName)
+                .HasMaxLength(50);
 
-            entity.Property(e => e.SecondSurname).HasMaxLength(50);
+            entity.Property(e => e.SecondSurname)
+                .HasMaxLength(50);
 
-            entity.Property(e => e.Street).HasMaxLength(100);
+            entity.Property(e => e.Street)
+                .HasMaxLength(100);
+
+            entity.Property(e => e.UserCode)
+                .HasMaxLength(10)
+                .IsUnicode(false);
+
+            entity.HasIndex(e => e.UserCode, "UC_UserCode")
+                .IsUnique();
 
             entity.HasOne(d => d.Role)
                 .WithMany(p => p.Users)
